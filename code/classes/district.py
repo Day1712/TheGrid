@@ -12,12 +12,11 @@ class District():
         self.grid_inputs = []
         self.batteries = []
         self.houses = []
-        self.own_cost = 0
         self.shared_cost = 0
+        self.price_cable = 9
+        self.price_battery = 5000
         self.load_houses(f'data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv')
         self.load_batteries(f'data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv')
-        self.calculate_own_cost()
-        self.calculate_shared_cost()
 
     def load_batteries(self, file_name):
         with open(file_name, 'r') as f:
@@ -46,20 +45,14 @@ class District():
                 self.grid_inputs.append(house.House(row[0], row[1], row[2]))
                 self.houses.append(house.House(row[0], row[1], row[2]))
 
-    def calculate_own_cost(self):
-        '''
-        Calculate the cost of all cables without sharing (so with overlap)
-        '''
-        for house in self.houses:
-            self.own_cost += 9 * len(house.cables)
-
     def calculate_shared_cost(self):
         '''
-        Calculate the cost of all cables with sharing (so without overlap)
+        Calculate the cost of the cables and the price of the batteries. All
+        segments that are shared are counted as 1 (thus this is the shared cost)
         '''
         unique_cables = set()
         for house in self.houses:
             for cable in house.cables:
                 unique_cables.add(cable)
 
-        self.shared_cost = 9 * len(unique_cables)
+        self.shared_cost = self.price_cable * len(unique_cables) + self.price_battery * len(self.batteries)

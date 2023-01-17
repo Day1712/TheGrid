@@ -1,19 +1,31 @@
 from code.classes import district
 import numpy as np
+import random
+
 
 def manhattan_distance(x1, y1, x2, y2):
     return abs(x1 - x2) + abs(y1 - y2)
 
-def nearest_battery(house, battery_list):
+def update_battery_capacity(house, battery):
+    battery.current_capacity += house.output
+
+def nearest_available_battery(house, battery_list):
     distances = []
 
     # Calculate the distance of a house to every battery in the list
     for i in range(len(battery_list)):
-        distances.append(manhattan_distance(house.pos_x, house.pos_y, battery_list[i].pos_x, battery_list[i].pos_y))
+
+        # Only look for batteries that still have room for the house output
+        if battery_list[i].current_capacity + house.output < battery_list[i].max_capacity:
+            distances.append(manhattan_distance(house.pos_x, house.pos_y, battery_list[i].pos_x, battery_list[i].pos_y))
 
     # Find the battery with the lowest distance
-    min_distance_index = np.argmin(distances)
-    return battery_list[min_distance_index]
+    best_battery_index = np.argmin(distances)
+
+    # Update battery max_capacity
+    update_battery_capacity(house, battery_list[best_battery_index])
+
+    return battery_list[best_battery_index]
 
 def create_route_list(house, battery):
     # TODO improve this code
@@ -48,11 +60,19 @@ def create_route_list(house, battery):
         if y == battery.pos_y:
             break
 
-def shortest_route(district):
+def random_shortest_route(district):
     '''
-    Calculates the shortest route from a house to the nearest battery with
-    overlapping cables and ignoring all outputs and battery capacity.
+    Calculates the shortest route from a house to the nearest available battery.
+    The order of houses is random, so each run the routes will be different.
     '''
-    for house in district.houses:
-        closest_battery = nearest_battery(house, district.batteries)
+    # Randomize the order of houses
+    shuffled_houses = district.houses[:]
+    random.shuffle(shuffled_houses)
+
+    # Create route from house to battery for each house in the grid
+    for house in shuffled_houses:
+        closest_battery = nearest_available_battery(house, district.batteries)
         create_route_list(house, closest_battery)
+
+    # Calculate the cost
+    district.calculate_shared_cost()
