@@ -7,13 +7,17 @@ class District():
     '''
     This class makes houses and batteries objects.
     '''
-    def __init__(self, batteries_file, houses_file):
-        # Grid inputs are the houses and batteries
+    def __init__(self, district_number):
+        self.district_number = district_number
         self.grid_inputs = []
         self.batteries = []
         self.houses = []
-        self.load_houses(houses_file)
-        self.load_batteries(batteries_file)
+        self.own_cost = 0
+        self.shared_cost = 0
+        self.load_houses(f'data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv')
+        self.load_batteries(f'data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv')
+        self.calculate_own_cost()
+        self.calculate_shared_cost()
 
     def load_batteries(self, file_name):
         with open(file_name, 'r') as f:
@@ -41,3 +45,21 @@ class District():
                 # Loading the house with the x, y, and max output from the file
                 self.grid_inputs.append(house.House(row[0], row[1], row[2]))
                 self.houses.append(house.House(row[0], row[1], row[2]))
+
+    def calculate_own_cost(self):
+        '''
+        Calculate the cost of all cables without sharing (so with overlap)
+        '''
+        for house in self.houses:
+            self.own_cost += 9 * len(house.cables)
+
+    def calculate_shared_cost(self):
+        '''
+        Calculate the cost of all cables with sharing (so without overlap)
+        '''
+        unique_cables = set()
+        for house in self.houses:
+            for cable in house.cables:
+                unique_cables.add(cable)
+
+        self.shared_cost = 9 * len(unique_cables)

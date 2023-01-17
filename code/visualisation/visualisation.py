@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 from code.classes import district
 
 
-def visualise(district, district_number):
+def visualise(district):
     # Lists for the plot
     list_x = []
     list_y = []
@@ -22,7 +22,7 @@ def visualise(district, district_number):
 
     # Make scatter plot with grid
     plt.grid(which = 'both')
-    plt.title(f'District {district_number}')
+    plt.title(f'District {district.district_number}')
     plt.scatter(list_x, list_y, c = list_colour, zorder = 3)
     plt.xticks(range(min(list_x), max(list_x) + 1), fontsize = 7)
     plt.yticks(range(min(list_y), max(list_y) + 1), fontsize = 7)

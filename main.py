@@ -4,18 +4,16 @@ from code.algorithms import shortest_route
 
 
 district_number = 3
-district = district.District(f'data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv',
-                            f'data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv')
+district = district.District(district_number)
 
 # -------------------- Shortest route (with overlap)------------------------
-# Without checking for capacity and output levels
+# Make cable routes without checking for capacity and output levels
 shortest_route.shortest_route(district)
 
-
 # --------------------------- Visualisation --------------------------------
-visualisation.visualise(district, district_number)
-
+# Plot the district
+visualisation.visualise(district)
 
 # ------------------------------ Output ------------------------------------
-# save output as json file
-# visualisation.name_function()
+# Save output as json file
+output.generate_json(district)
