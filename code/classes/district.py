@@ -48,7 +48,7 @@ class District():
     def calculate_shared_cost(self):
         '''
         Calculate the cost of the cables and the price of the batteries. All
-        segments that are shared are counted as 1 (thus this is the shared cost)
+        shared segments are only counted one (thus this is the shared cost)
         '''
         unique_cables = set()
         for house in self.houses:

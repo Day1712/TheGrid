@@ -17,6 +17,8 @@ def generate_json(district):
         for house in district.houses:
 
             # Only adding houses to the list if they lead to that battery
+            # The last coordinate of the cable should equal the battery position
+            # ONLY WORKS WHEN the cable routes overlap with each other
             if house.cables[-1] == (battery.pos_x, battery.pos_y):
                 data[-1]["houses"].append({"location": house.location, "output": house.output, "cables": tuple_to_string(house.cables)})
 
