@@ -1,4 +1,7 @@
 from code.classes import cable
+from code.functions import load_entities
+
+
 import random
 
 def random_cables(houses, batteries):
@@ -7,6 +10,8 @@ def random_cables(houses, batteries):
     into account maximum battery capacity"""
     cables = []
     for house in houses:
-        cable = cable.Cable(random.choice(batteries), house)
-        cables.append(cable)
+        current_cable = cable.Cable(random.choice(batteries), house)
+        cables.append(current_cable)
+
+    load_entities.load_cables(cables)
     return cables

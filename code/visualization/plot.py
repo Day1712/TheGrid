@@ -6,8 +6,7 @@ def plot(houses, batteries, cables):
     all together in one plot"""
     # lay each cable and plot it
     for cable in cables:
-        cable_xs, cable_ys = cable.lay_cable()
-        plt.plot(cable_xs, cable_ys, "b-")
+        plt.plot(cable.cable_xs, cable.cable_ys, "b-")
 
 
     # plot all houses in one run

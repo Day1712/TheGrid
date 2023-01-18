@@ -27,3 +27,7 @@ def load_batteries(csv_file_path):
         batteries.append(current_battery)
 
     return batteries
+
+def load_cables(cables):
+    for cable in cables:
+        cable.lay_cable()
