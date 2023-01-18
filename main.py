@@ -5,7 +5,8 @@ from code.experiments import experiment1
 
 
 # -------------------------------- Input ----------------------------------
-district_number = 1
+district_number = 4
+experiment_runs = 100
 
 # --------------------------- Shortest route -------------------------------
 '''
@@ -26,4 +27,4 @@ output.generate_json(district)
 '''
 Calculates the average cost of a number of runs
 '''
-experiment1.experiment(district_number)
+experiment1.experiment(district_number, experiment_runs)
