@@ -58,4 +58,4 @@ def shortest_route(district):
         create_route_list(house, closest_battery)
 
     # Calculate the cost
-    district.calculate_shared_cost()
+    district.calculate_own_cost()

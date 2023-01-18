@@ -6,8 +6,6 @@ from code.experiments import experiment1
 
 # -------------------------------- Input ----------------------------------
 district_number = 1
-district = district.District(district_number)
-
 
 # --------------------------- Shortest route -------------------------------
 '''
@@ -15,6 +13,7 @@ Make cable routes WITH taking capacity and output levels into account. The order
 of creating routes for each house is random, so each run produces different
 results
 '''
+district = district.District(district_number)
 valid_shortest_route.random_shortest_route(district)
 
 # --------------------------- Visualisation --------------------------------
@@ -24,4 +23,7 @@ visualisation.visualise(district)
 output.generate_json(district)
 
 # ----------------------------- Experiment ---------------------------------
-experiment1.experiment(district)
+'''
+Calculates the average cost of a number of runs
+'''
+experiment1.experiment(district_number)

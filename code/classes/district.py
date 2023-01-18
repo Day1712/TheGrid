@@ -12,7 +12,8 @@ class District():
         self.grid_inputs = []
         self.batteries = []
         self.houses = []
-        self.shared_cost = 0
+        self.own_cost = None
+        self.shared_cost = None #TODO calculate cost without overlapping
         self.price_cable = 9
         self.price_battery = 5000
         self.load_houses(f'data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv')
@@ -45,14 +46,17 @@ class District():
                 self.grid_inputs.append(house.House(row[0], row[1], row[2]))
                 self.houses.append(house.House(row[0], row[1], row[2]))
 
-    def calculate_shared_cost(self):
+    def calculate_own_cost(self):
         '''
-        Calculate the cost of the cables and the price of the batteries. All
-        shared segments are only counted one (thus this is the shared cost)
+        Calculate the cost of the cables and batteries. All shared segments are
+        counted without taking overlapping ones into account (thus this is own
+        cost and not shared)
         '''
-        unique_cables = set()
+        self.own_cost = 0
+
+        all_cables = []
         for house in self.houses:
             for cable in house.cables:
-                unique_cables.add(cable)
+                all_cables.append(cable)
 
-        self.shared_cost = self.price_cable * len(unique_cables) + self.price_battery * len(self.batteries)
+        self.own_cost = self.price_cable * len(all_cables) + self.price_battery * len(self.batteries)
