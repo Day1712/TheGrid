@@ -3,9 +3,9 @@ from code.algorithms import closest, random
 from code.output import output_creator
 from code.visualization import plot
 
-# load, plot and save json for district 1
-houses_1 = load_entities.load_houses("data/Huizen&Batterijen/district_1/district-1_houses.csv")
-batteries_1 = load_entities.load_batteries("data/Huizen&Batterijen/district_1/district-1_batteries.csv")
+# load, plot and save json for test district max
+houses_1 = load_entities.load_houses("data/Huizen&Batterijen/district_max/houses_max.csv")
+batteries_1 = load_entities.load_batteries("data/Huizen&Batterijen/district_max/batteries_max.csv")
 cables_1 = closest.closest_cables(houses_1, batteries_1)
 
 plot.plot(houses_1, batteries_1, cables_1)
