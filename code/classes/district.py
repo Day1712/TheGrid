@@ -52,9 +52,9 @@ class District():
         counted without taking overlapping ones into account (thus this is own
         cost and not shared)
         '''
-        all_cables = []
+        segments = 0
         for house in self.houses:
-            for cable in house.cables:
-                all_cables.append(cable)
+            # Segments are the lines between the coordinates (therefore -1)
+            segments += len(house.cables) - 1
 
-        self.own_cost = self.price_cable * len(all_cables) + self.price_battery * len(self.batteries)
+        self.own_cost = self.price_cable * segments + self.price_battery * len(self.batteries)
