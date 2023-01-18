@@ -12,7 +12,7 @@ class District():
         self.grid_inputs = []
         self.batteries = []
         self.houses = []
-        self.own_cost = None
+        self.own_cost = 0
         self.shared_cost = None #TODO calculate cost without overlapping
         self.price_cable = 9
         self.price_battery = 5000
@@ -52,8 +52,6 @@ class District():
         counted without taking overlapping ones into account (thus this is own
         cost and not shared)
         '''
-        self.own_cost = 0
-
         all_cables = []
         for house in self.houses:
             for cable in house.cables:
