@@ -88,5 +88,6 @@ def random_shortest_route(houses, batteries):
 
     # Calculate the cost
     output_creator.compute_total_cable_length(cables)
-    total_cost = output_creator.compute_total_cable_cost(cables)
-    return total_cost
+    total_cable_cost = output_creator.compute_total_cable_cost(cables)
+    total_cost = len(batteries) * 5000 + total_cable_cost
+    return total_cost, cables

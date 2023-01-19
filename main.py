@@ -1,11 +1,32 @@
 from code.functions import load_entities
-from code.algorithms import closest, random
+from code.algorithms import closest, random_1
 from code.output import output_creator
 from code.visualization import plot
 from code.output import output_creator
-from code.experiments import rhode_experiment
+from code.experiments import baseline_experiment
 import matplotlib.pyplot as plt
 import numpy as np
+
+
+
+
+# load, plot and save json for given district
+district = 1
+number_of_runs = 1000
+iterations, costs_list, houses, batteries, cables = baseline_experiment.experiment(district, number_of_runs)
+baseline_experiment.plot(iterations, costs_list)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 """
@@ -18,13 +39,8 @@ plot.plot(test_houses, test_batteries, test_cables)
 # output_creator.compute_total_cable_length(cables_1)
 # output_creator.compute_total_cable_cost(cables_1)
 # print(output_creator.create_json_output(1, houses_1, batteries_1, cables_1))
-"""
 
-# load, plot and save json for given district
-district = 1
-number_of_runs = 1000
-rhode_experiment.experiment(district, number_of_runs)
-"""
+
 
 houses = load_entities.load_houses(f"data/Huizen_Batterijen/district_{district}/district-{district}_houses.csv")
 batteries = load_entities.load_batteries(f"data/Huizen_Batterijen/district_{district}/district-{district}_batteries.csv")
