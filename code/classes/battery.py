@@ -7,3 +7,4 @@ class Battery:
         self.coordinate = simple_functions.get_coordinate(self.battery_x, self.battery_y)
         self.max_capacity = max_capacity
         self.battery_cost = battery_cost
+        self.current_capacity = 0.0

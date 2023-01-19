@@ -3,8 +3,10 @@ from code.algorithms import closest, random
 from code.output import output_creator
 from code.visualization import plot
 from code.output import output_creator
+from code.experiments import rhode_experiment
 import matplotlib.pyplot as plt
 import numpy as np
+
 
 """
 # load, plot and save json for test district max
@@ -20,13 +22,22 @@ plot.plot(test_houses, test_batteries, test_cables)
 
 # load, plot and save json for given district
 district = 1
+number_of_runs = 1000
+rhode_experiment.experiment(district, number_of_runs)
+"""
+
 houses = load_entities.load_houses(f"data/Huizen_Batterijen/district_{district}/district-{district}_houses.csv")
 batteries = load_entities.load_batteries(f"data/Huizen_Batterijen/district_{district}/district-{district}_batteries.csv")
 
 
-cables = random.random_cables(houses, batteries)
+cables = closest.closest_cables(houses, batteries)
+plot.plot(houses, batteries, cables)
+output_creator.compute_total_cable_length(cables)
+output_creator.compute_total_cable_cost(cables)
+print(output_creator.create_json_output(1, houses, batteries, cables))
 
-iterations = 10000
+
+iterations = 1000
 lowest_cost = None
 
 iteration_list = []
@@ -44,6 +55,7 @@ for i in range(iterations):
 lowest_cost = np.argmin(costs_list)
 plt.plot(iteration_list, costs_list, 'b.')
 plt.show()
+"""
 # plot.plot(houses, batteries, cables)
 # output_creator.compute_total_cable_length(cables_1)
 # output_creator.compute_total_cable_cost(cables_1)

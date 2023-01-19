@@ -3,7 +3,9 @@ from code.functions import simple_functions
 import random
 
 class Cable:
-    def __init__(self, battery, house):
+    def __init__(self, xs, ys, battery, house):
+        self.cable_xs = xs
+        self.cable_ys = ys
         self.battery = battery
         self.house = house
 
