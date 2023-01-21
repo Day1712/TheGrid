@@ -36,27 +36,27 @@ def create_route_list(house, battery):
     # If the cable is left from the battery, the route goes right
     while x < battery.pos_x:
         x += 1
-        house.cables.append((x, y))
+        house.cables.add_cable_segment((x - 1, y), (x, y))
         if x == battery.pos_x:
             break
     # If the cable is right from the battery, the route goes left
     while x > battery.pos_x:
         x -= 1
-        house.cables.append((x, y))
+        house.cables.add_cable_segment((x + 1, y), (x, y))
         if x == battery.pos_x:
             break
 
     # If the cable is under from the battery, the route goes up
     while y < battery.pos_y:
         y += 1
-        house.cables.append((x, y))
+        house.cables.add_cable_segment((x, y - 1), (x, y))
         if y == battery.pos_y:
             break
 
     # If the cable is above from the battery, the route goes down
     while y > battery.pos_y:
         y -= 1
-        house.cables.append((x, y))
+        house.cables.add_cable_segment((x, y + 1), (x, y))
         if y == battery.pos_y:
             break
 
@@ -76,3 +76,4 @@ def random_shortest_route(district):
 
     # Calculate the cost
     district.calculate_own_cost()
+    district.calculate_shared_cost()

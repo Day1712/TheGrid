@@ -6,8 +6,8 @@ def experiment(district_number, number_of_runs):
     for i in range(number_of_runs):
         new_district = district.District(district_number)
         valid_shortest_route.random_shortest_route(new_district)
-        all_costs.append(new_district.own_cost)
+        all_costs.append(new_district.shared_cost)
 
-    print(f'The average own cost over {number_of_runs} runs is {sum(all_costs) / number_of_runs}')
+    print(f'The average own shared over {number_of_runs} runs is {sum(all_costs) / number_of_runs}')
 
     return

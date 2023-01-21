@@ -10,3 +10,4 @@ class Battery():
         self.current_capacity = 0.0
         self.colour = 'limegreen'
         # low priority TODO: instead of markers, find a way to use pictures in the plot
+        self.price = 5000

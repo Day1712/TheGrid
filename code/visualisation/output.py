@@ -1,11 +1,6 @@
 from code.classes import district
 import json
 
-def tuple_to_string(list_of_tuples):
-    new_list = []
-    for tuble in list_of_tuples:
-        new_list.append(",".join(map(str, tuble)))
-    return new_list
 
 def generate_json(district):
     data = []
@@ -21,8 +16,8 @@ def generate_json(district):
 
             # The last coordinate of the cable should equal the battery position
             # so it ONLY WORKS WHEN the cable routes have overlap!
-            if house.cables[-1] == (battery.pos_x, battery.pos_y):
-                data[-1]["houses"].append({"location": house.location, "output": house.output, "cables": tuple_to_string(house.cables)})
+            if house.cables.cable_segments[-1][-1] == (battery.pos_x, battery.pos_y):
+                data[-1]["houses"].append({"location": house.location, "output": house.output, "cables": house.cables.get_route_list_string()})
 
     json_output = json.dumps(data, indent = 2)
     with open("output.json", "w") as file:

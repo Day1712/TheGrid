@@ -1,3 +1,5 @@
+from code.classes import cable
+
 class House():
     '''
     This class defines the house properties
@@ -9,4 +11,4 @@ class House():
         self.output = float(output)
         self.colour = 'tan'
         # low priority TODO: instead of markers, find a way to use pictures in the plot
-        self.cables = [(self.pos_x, self.pos_y)]
+        self.cables = cable.Cable()

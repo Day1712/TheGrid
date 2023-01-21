@@ -1,7 +1,5 @@
 import csv
-from code.classes import house, battery
-
-#TODO calculate overal cost of the cables
+from code.classes import house, battery, cable
 
 class District():
     '''
@@ -13,9 +11,7 @@ class District():
         self.batteries = []
         self.houses = []
         self.own_cost = 0
-        self.shared_cost = None #TODO calculate cost without overlapping
-        self.price_cable = 9
-        self.price_battery = 5000
+        self.shared_cost = 0
         self.load_houses(f'data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv')
         self.load_batteries(f'data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv')
 
@@ -46,15 +42,37 @@ class District():
                 self.grid_inputs.append(house.House(row[0], row[1], row[2]))
                 self.houses.append(house.House(row[0], row[1], row[2]))
 
+    # We won't really have to use the own cost anymore but I left it in for now
     def calculate_own_cost(self):
         '''
         Calculate the cost of the cables and batteries. All shared segments are
         counted without taking overlapping ones into account (thus this is own
         cost and not shared)
         '''
-        segments = 0
-        for house in self.houses:
-            # Segments are the lines between the coordinates (therefore -1)
-            segments += len(house.cables) - 1
 
-        self.own_cost = self.price_cable * segments + self.price_battery * len(self.batteries)
+        for house in self.houses:
+            self.own_cost += house.cables.price * len(house.cables.cable_segments)
+
+        # Add cost for each battery
+        for battery in self.batteries:
+            self.own_cost += battery.price
+
+    def calculate_shared_cost(self):
+        '''
+        Calculate the cost of the cables and batteries. Taking into account
+        overlap.
+        '''
+
+        # Create a set of the union all house cable segments in the grid
+        unique_segments = set()
+        for house in self.houses:
+            for segment in house.cables.cable_segments:
+                unique_segments.add(segment)
+
+        # Multiply the cost of the first house cable price (because all cables
+        # have the same cost)
+        self.shared_cost = self.houses[0].cables.price * len(unique_segments)
+
+        # Add cost for each battery
+        for battery in self.batteries:
+            self.shared_cost += battery.price
