@@ -4,7 +4,6 @@ import json
 
 def generate_json(district):
     data = []
-    # Still have to write code that calculates the shared cost
     data.append({"district": district.district_number, "costs-shared": district.shared_cost})
 
     for battery in district.batteries:
@@ -13,9 +12,7 @@ def generate_json(district):
         for house in district.houses:
 
             # Only adding houses to the list if they lead to that battery.
-
             # The last coordinate of the cable should equal the battery position
-            # so it ONLY WORKS WHEN the cable routes have overlap!
             if house.cables.cable_segments[-1][-1] == (battery.pos_x, battery.pos_y):
                 data[-1]["houses"].append({"location": house.location, "output": house.output, "cables": house.cables.get_route_list_string()})
 

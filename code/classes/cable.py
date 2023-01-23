@@ -3,7 +3,7 @@ class Cable():
     This class defines cables properties.
     '''
     def __init__(self):
-        self.cable_segments = [] # Example: [ ((1,1), (1,2)), ((1,2), 1,3)) ]
+        self.cable_segments = [] # Example: [ ((1,1), (1,2)), ((1,2), (1,3)) ]
         self.price = 9
 
     # A segment consists out of two adjacent points in the grid (start and end)
@@ -12,6 +12,8 @@ class Cable():
 
     # Get a list from the segment list of the coordinates of the cable routes for the plot
     def get_route_list(self):
+
+        # Adding the first coordinate from the segment for every segment in the list
         cable_plot_list = [self.cable_segments[i][0] for i in range(len(self.cable_segments))]
 
         # Add last segment (the battery location)

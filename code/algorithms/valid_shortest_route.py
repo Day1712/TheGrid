@@ -28,7 +28,6 @@ def nearest_available_battery(house, battery_list):
     return battery_list[best_battery_index]
 
 def create_route_list(house, battery):
-    # TODO improve this code
 
     x = house.pos_x
     y = house.pos_y

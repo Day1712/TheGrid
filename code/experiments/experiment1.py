@@ -8,6 +8,6 @@ def experiment(district_number, number_of_runs):
         valid_shortest_route.random_shortest_route(new_district)
         all_costs.append(new_district.shared_cost)
 
-    print(f'The average own shared over {number_of_runs} runs is {sum(all_costs) / number_of_runs}')
+    print(f'The average shared shared over {number_of_runs} runs is {sum(all_costs) / number_of_runs}')
 
     return
