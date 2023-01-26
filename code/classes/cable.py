@@ -13,6 +13,10 @@ class Cable():
     def add_cable_segment(self, start, end):
         self.cable_segments.append((start, end))
 
+    # Start clean
+    def clear_segments(self):
+        self.cable_segments = []
+
     # Get a list from the segment list of the coordinates of the cable routes for the plot
     def get_route_list(self):
 

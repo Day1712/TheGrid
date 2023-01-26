@@ -1,6 +1,13 @@
 from code.classes import district
-import numpy as np
 import random
+import heapq
+
+'''
+This is exactly the same as the random except for the way a route is made from
+a house to a battery. Here, the A* is used. I thought it might come in handy
+with some reconstruction (e.g. lowering the cost if it chooses to take the
+route with overlap). But maybe not.
+'''
 
 
 def manhattan_distance(x1, y1, x2, y2):
@@ -53,44 +60,76 @@ def random_available_battery(house, battery_list):
     # Only returns -1 when there are no batteries available
     return -1
 
-def create_route(house, battery):
-    '''
-    First goes right or left in the direction of the battery. Then goes up or down.
-    '''
-    x = house.pos_x
-    y = house.pos_y
+def a_star_route(house, battery):
+    start = (house.pos_x, house.pos_y)
+    goal = (battery.pos_x, battery.pos_y)
 
-    # If the cable is left from the battery, the route goes right
-    while x < battery.pos_x:
-        x += 1
-        house.cables.add_cable_segment((x - 1, y), (x, y))
-        if x == battery.pos_x:
-            break
-    # If the cable is right from the battery, the route goes left
-    while x > battery.pos_x:
-        x -= 1
-        house.cables.add_cable_segment((x + 1, y), (x, y))
-        if x == battery.pos_x:
-            break
+    # Create a priority queue list and evaluated coordinates set
+    queue = []
+    evaluated = set()
 
-    # If the cable is under from the battery, the route goes up
-    while y < battery.pos_y:
-        y += 1
-        house.cables.add_cable_segment((x, y - 1), (x, y))
-        if y == battery.pos_y:
-            break
+    # Add the starting coordinate to the queue
+    heapq.heappush(queue, (0, (start)))
 
-    # If the cable is above from the battery, the route goes down
-    while y > battery.pos_y:
-        y -= 1
-        house.cables.add_cable_segment((x, y + 1), (x, y))
-        if y == battery.pos_y:
-            break
+    # Create a dictionary to store the previous location
+    came_from = {start: None}
+
+    # Create a dictionary to store the cost of the route
+    costs_so_far = {start: 0}
+
+    while queue:
+        # Current location (coordinate)
+        current = heapq.heappop(queue)[1]
+
+        # Make sure to only check this coordinate once
+        evaluated.add(current)
+
+        # Generate the neighbours of the current coordinate
+        neighbours = []
+
+        for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
+            x, y = current
+            neighbour = (x + dx, y + dy)
+
+            # The road goes forward
+            if neighbour not in evaluated:
+                neighbours.append(neighbour)
+
+        # Update the costs and parents of the neighbours
+        for neighbour in neighbours:
+
+            # Check whether the neighbour has not been visited before
+            if neighbour not in costs_so_far:
+
+                # Each adjencent step (i.e. towards a neighbour) costs 1
+                costs_so_far[neighbour] = costs_so_far[current] + 1
+
+                # Adding priority (cost + distance to goal)
+                priority = costs_so_far[current] + 1 + manhattan_distance(goal[0], neighbour[0], goal[1], neighbour[1])
+                heapq.heappush(queue, (priority, neighbour))
+
+                # Keeping track of the route
+                came_from[neighbour] = current
+
+        # If we have reached the goal, update the complete route
+        if current == goal:
+            route = []
+
+            while current != start:
+                route.append((current, came_from[current]))
+                current = came_from[current]
+
+            route.append((start, current))
+            route.reverse()
+
+            for segment in route:
+                house.cables.add_cable_segment(segment[0], segment[1])
+
+            return
 
 def create_all_routes(district):
     '''
-    Creates routes for all houses to available batteries and calculates the
-    cost for the overall district.
+    Creates routes with A* from a house to an available battery.
     '''
 
     # Keep track of houses that are connected with a battery
@@ -100,7 +139,7 @@ def create_all_routes(district):
     # Keeps trying until it creates routes for all houses
     while not all_connected:
 
-        # Reset if there was a dead end
+        # Start the for-loop again
         district.reset_grid()
         connected_houses_count = 0
 
@@ -117,7 +156,7 @@ def create_all_routes(district):
             connected_houses_count += 1
 
             # It will create a route between house and battery
-            create_route(house, district.batteries[chosen_battery_index])
+            a_star_route(house, district.batteries[chosen_battery_index])
 
             # Check if all houses are connected to break the while-loop
             if connected_houses_count == len(district.houses):

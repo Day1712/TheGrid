@@ -76,3 +76,13 @@ class District():
         # Add cost for each battery
         for battery in self.batteries:
             self.shared_cost += battery.price
+
+    def reset_grid(self):
+
+        # Clear all cable segments
+        for house in self.houses:
+            house.cables.clear_segments()
+
+        # Batteries back to current_capacity 0
+        for battery in self.batteries:
+            battery.current_capacity = 0
