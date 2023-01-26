@@ -9,6 +9,6 @@ class House():
         self.pos_y = int(pos_y)
         self.location = f'{pos_x}, {pos_y}'
         self.output = float(output)
-        self.colour = 'tan'
+        self.colour = 'k'
         # low priority TODO: instead of markers, find a way to use pictures in the plot
         self.cables = cable.Cable()

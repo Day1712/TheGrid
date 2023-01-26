@@ -1,30 +1,36 @@
 from code.classes import district
 from code.visualisation import visualisation, output
-from code.algorithms import valid_shortest_route
+from code.algorithms import random, a_star
 from code.experiments import experiment1
 
+'''
+Voor nu heb ik een paar stappen eruit gecomment aangezien we nog aan het testen zijn
+'''
 
 # -------------------------------- Input ----------------------------------
-district_number = 1
-experiment_runs = 100
+district_number = 3
+experiment_runs = 1000
 
-# --------------------------- Shortest route -------------------------------
-'''
-Make cable routes WITH taking capacity and output levels into account. The order
-of creating routes for each house is random, so each run produces different
-results
-'''
+
+# --------------------------- Create district -----------------------------
 district = district.District(district_number)
-valid_shortest_route.random_shortest_route(district)
 
-# --------------------------- Visualisation --------------------------------
+
+# ----------------------------- Random Route ------------------------------
+random.random_routes(district)
+
+
+# ------------------------------ A* Route ---------------------------------
+#a_star.a_star_routes(district)
+
+
+# ----------------------- District Visualisation ---------------------------
 visualisation.visualise(district)
 
+
 # ------------------------------ Output ------------------------------------
-output.generate_json(district)
+#output.generate_json(district)
+
 
 # ----------------------------- Experiment ---------------------------------
-'''
-Calculates the average own cost of a number of runs
-'''
-experiment1.experiment(district_number, experiment_runs)
+#experiment1.experiment(district_number, experiment_runs)

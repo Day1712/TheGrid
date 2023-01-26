@@ -5,6 +5,9 @@ class Cable():
     def __init__(self):
         self.cable_segments = [] # Example: [ ((1,1), (1,2)), ((1,2), (1,3)) ]
         self.price = 9
+        # TODO net zoals bij huis en batterij hier ook een kleur toe te wijzen.
+        # Tip van wouter was om batterijen verschillende kleuren te geven en de
+        # kabels daarbij te matchen voor beter overzicht (begreep ik dat goed?)
 
     # A segment consists out of two adjacent points in the grid (start and end)
     def add_cable_segment(self, start, end):

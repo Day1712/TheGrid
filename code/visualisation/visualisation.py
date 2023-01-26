@@ -22,7 +22,7 @@ def visualise(district):
 
     # Make scatter plot with grid
     plt.grid(which = 'both')
-    plt.title(f'District {district.district_number} (with own cost of {district.own_cost} and shared cost of {district.shared_cost})')
+    plt.title(f'District {district.district_number} (with shared cost of {district.shared_cost})')
     plt.scatter(list_x, list_y, c = list_colour, zorder = 3)
     plt.xticks(range(min(list_x), max(list_x) + 1), fontsize = 7)
     plt.yticks(range(min(list_y), max(list_y) + 1), fontsize = 7)
@@ -32,6 +32,6 @@ def visualise(district):
     for house in district.houses:
 
         x, y = zip(*house.cables.get_route_list())
-        plt.plot(x, y, c = 'gray')
+        plt.plot(x, y, c = 'blue')
 
     plt.show()
