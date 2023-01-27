@@ -1,4 +1,4 @@
-from code.algorithms import random, random_a_star
+from code.algorithms import random
 from code.classes import district
 
 def experiment(district_number, number_of_runs):

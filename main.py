@@ -1,6 +1,6 @@
 from code.classes import district
 from code.visualisation import visualisation, output
-from code.algorithms import random, random_a_star, hill_climber
+from code.algorithms import random, a_star_route, hill_climber
 from code.experiments import experiment1
 
 # -------------------------------- Input ----------------------------------
@@ -12,14 +12,11 @@ experiment_runs = 500
 district = district.District(district_number)
 
 
-# ----------------------------- Random Route ------------------------------
+# ----------------------------- Random Routes ------------------------------
 random.create_all_routes(district)
 
 
-# --------------------------- Random A* Route ------------------------------
-#random_a_star.create_all_routes(district)
-
-# ----------------------- Hill Climber with Random  -----------------------
+# ------------------------------ Hill Climber  ----------------------------
 district = hill_climber.hill_climber_algorithm(district)
 
 

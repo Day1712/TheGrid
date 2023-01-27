@@ -1,38 +1,8 @@
 from code.classes import district
-import numpy as np
 import random
-
-
-def manhattan_distance(x1, y1, x2, y2):
-    return abs(x1 - x2) + abs(y1 - y2)
 
 def update_battery_capacity(house, battery):
     battery.current_capacity += house.output
-
-# this one unfortunately does not work as fast random (if it works at all)
-def nearest_available_battery(house, battery_list):
-    """
-    This function takes a house and a list of batteries as input, and returns
-    the index of the nearest battery that has enough capacity to connect to the
-    house. If there is no such battery, it returns index of -1.
-    """
-    distances = {}
-
-    # Loop over every battery in the list
-    for i in range(len(battery_list)):
-
-        # Check if the current battery has enough capacity to connect to the house
-        if battery_list[i].current_capacity + house.output < battery_list[i].max_capacity:
-            distances[i] = manhattan_distance(house.pos_x, house.pos_y, battery_list[i].pos_x, battery_list[i].pos_y)
-
-    # If there are no available batteries, return index -1
-    if len(distances) < 1:
-        return -1
-
-    # Find the nearest one, update its capacity, and return it
-    nearest_battery_index = min(distances, key=distances.get)
-    update_battery_capacity(house, battery_list[nearest_battery_index])
-    return nearest_battery_index
 
 def random_available_battery(house, battery_list):
     # Randomize order of battery list
@@ -115,6 +85,9 @@ def create_all_routes(district):
             # End the while-loop if it can
             district.valid_solution()
 
-    # Calculate the cost
+    # Update costs
     district.calculate_own_cost()
     district.calculate_shared_cost()
+
+    # Update coordinates (only for A* routes)
+    district.update_cable_coordinates()

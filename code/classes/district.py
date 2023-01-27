@@ -16,6 +16,9 @@ class District():
         # Dictionary of house-battery combinations (key: house, value: battery)
         self.connections = {}
 
+        # Set of cable coordinates (for a* routes)
+        self.cable_coordinates = set()
+
         # Costs
         self.own_cost = 0
         self.shared_cost = 0
@@ -114,5 +117,11 @@ class District():
                 self.valid = False
 
         if len(self.connections) != len(self.houses):
-            #print('Not all houses are connected')
+            print('Not all houses are connected')
             self.valid = False
+
+    # Function is only for the A* routes
+    def update_cable_coordinates(self):
+        for house in self.houses:
+            for coordinate in house.cables.get_route_list():
+                self.cable_coordinates.add(coordinate)
