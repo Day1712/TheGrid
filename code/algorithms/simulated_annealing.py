@@ -68,10 +68,12 @@ def simulated_annealing_algorithm(district, temperature = 100, cooling_rate = 0.
         new_cost = new_district.calculate_shared_cost()
         old_cost = district.calculate_shared_cost()
 
-        delta_cost = old_cost - new_cost
+        # Calculate the probability of accepting this new district
+        delta = new_cost - old_cost
+        probability = math.exp(-delta / temperature)
 
-        # Continue with the new_district if costs go down or if solution is accepted according to acceptance probability
-        if delta_cost < 0 or math.exp(delta_cost/temperature) > random.random():
+        # if random falls in probabilty range, new district is accepted
+        if random.random() < probability:
 
             district = new_district
             no_improvements = 0
