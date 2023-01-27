@@ -1,4 +1,4 @@
-from code.algorithms import a_star, random as rando
+from code.algorithms import a_star_route, random as rando
 from code.classes import district
 import random
 import copy
@@ -68,7 +68,7 @@ def hill_climber_algorithm(district, convergence_treshold = 10):
             # Continue with the new_district if costs go down
             district = new_district
 
-            # Uncomment if you want to see the costs go down:
+            # Comment out if you don't want to see the costs go down:
             print(district.calculate_shared_cost())
 
             # Check if local minimum is found
@@ -91,7 +91,7 @@ TAKES A FEW MINUTES.
 
 Results are worse than ^ where routes are created horizontally and then
 vertically towards the battery. That's why this is commented out for now. Will
-clean it up soon. 
+clean it up soon.
 
 
 

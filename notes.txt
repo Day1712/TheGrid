@@ -1,0 +1,28 @@
+
+- The cable class:
+  Not sure how to improve this yet. Now, each house has a Cable object. These
+  Cable objects have a list with all segments of the route. This should be
+  easier. Storing cables in the district as a dictionary perhaps.
+
+- Creating all routes:
+  Not a big of a change but I want to write this down before I forget: FIRST
+  assign houses to batteries (repeat until valid solution), only THEN create
+  all routes from house to batteries. Does not make sense to create routes only
+  to remove them again because the solution is not valid.
+
+- Create one route:
+  What I want is for routes to overlap with other cable segments. How? A* is not
+  working. Very long (and ugly) code. Need something simpler.
+
+  Short code idea for vertical_horizontal routes:
+
+  coordinates = []
+  coordinates.append((house_x, house_y))
+  coordinates.append((battery_x, house_y))
+  coordinates.append((battery_x, battery_y))
+
+  Just need to make segments out of this. Or think of another way to calculate
+  shared cost. Maybe connect houses with other cables, then we can just
+  calculate the length of all cables. 
+
+- Need a file to save districts with the best solutions before we lose them all
