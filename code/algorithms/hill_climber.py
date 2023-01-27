@@ -1,29 +1,81 @@
-from code.algorithms.random import random_routes
+from code.algorithms import random as rando
 from code.classes import district
 import random
+import copy
 
 '''
-Pseudo code from the lecture:
+DUURT ONGEVEER EEN MINUUT
 
-Kies een random start state
-Herhaal tot na N-keer niet meer verbetert:
-    Doe een kleine random aanpassing
-    Als de state is verslechterd:
-        Maak de aanpassing ongedaan
+
+Pseudo code:
+
+Genereer een random start state
+Herhaal tot de kosten na N-keer niet meer verbeteren:
+    Doe een kleine random aanpassing: ruil de batterijen om van 2 huizen
+    Als de kost is omlaag gaat:
+        terug naar vorige staat
 '''
 
-def hill_climber(district, number_of_iterations = 100):
-    # Initialize random solution
-    start_state = random.random_routes(district)
+def swapping_connections(connections_dict):
+    continue_loop = True
 
-    for i in range(number_of_iterations):
+    while continue_loop:
+        # Randomly picking two houses
+        house_1, house_2 = random.sample(list(connections_dict), 2)
+        battery_1, battery_2 = connections_dict[house_1], connections_dict[house_2]
+
+        # Only swap if solution stays valid
+        # (TODO change this long if statement into something readable)
+        if ((battery_1.current_capacity - house_1.output) + house_2.output) <= battery_1.max_capacity and ((battery_2.current_capacity - house_2.output) + house_1.output) <= battery_2.max_capacity:
+
+            # Update battery capacities
+            battery_1.current_capacity += -house_1.output + house_2.output
+            battery_2.current_capacity += -house_2.output + house_1.output
+
+            # Remove previous cable segments
+            house_1.cables.cable_segments = []
+            house_2.cables.cable_segments = []
+
+            # Create new cable routes
+            rando.create_route(house_1, battery_2)
+            rando.create_route(house_2, battery_1)
+
+            # Updating the connections_dict with new connections
+            connections_dict[house_1] = battery_1
+            connections_dict[house_2] = battery_2
+
+            # Stop the loop
+            continue_loop = False
+
+def hill_climber_algorithm(district, convergence_treshold = 10):
+    no_improvements = 0
+
+    while no_improvements < convergence_treshold:
         # Makes a copy of the district to work with
-        district_copy = district.copy() # TODO find out, Deep copy or not?
+        new_district = copy.deepcopy(district)
 
-        # TODO think of mutations that help improve the routes
+        # Swapping a house-battery connnection
+        swapping_connections(new_district.connections)
 
+        # Calculate costs
+        new_cost = new_district.calculate_shared_cost()
+        old_cost = district.calculate_shared_cost()
 
-        # TODO Calculate new cost
+        # Undo if solution is costs went up (or district is not valid)
+        if new_cost > old_cost:
+            new_district = district
 
+        # Continue with the new_district if costs go down
+        else:
+            district = new_district
 
-        # TODO compare costs
+            # Uncomment if you want to see the costs go down:
+            print(district.calculate_shared_cost())
+
+            # Check if local minimum is found
+            if new_cost == old_cost:
+                no_improvements += 1
+            else:
+                no_improvements = 0
+
+    return district

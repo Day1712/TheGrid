@@ -92,37 +92,28 @@ def create_all_routes(district):
     Creates routes for all houses to available batteries and calculates the
     cost for the overall district.
     '''
+    while not district.valid:
 
-    # Keep track of houses that are connected with a battery
-    all_connected = False
-    connected_houses_count = 0
-
-    # Keeps trying until it creates routes for all houses
-    while not all_connected:
-
-        # Reset if there was a dead end
+        # Reset for every dead end
         district.reset_grid()
-        connected_houses_count = 0
 
         # For each house, find a random available battery
         for house in district.houses:
             chosen_battery_index = random_available_battery(house, district.batteries)
 
-            # If battery index is -1, start the loop again!
+            # If battery index is -1 no battery was found, start the loop again!
             if chosen_battery_index == -1:
                 #print('trying again')
                 break
 
             # If loop is not broken, there is a house-battery connection!
-            connected_houses_count += 1
+            district.connections[house] = district.batteries[chosen_battery_index]
 
             # It will create a route between house and battery
             create_route(house, district.batteries[chosen_battery_index])
 
-            # Check if all houses are connected to break the while-loop
-            if connected_houses_count == len(district.houses):
-                all_connected = True
-
+            # End the while-loop if it can
+            district.valid_solution()
 
     # Calculate the cost
     district.calculate_own_cost()

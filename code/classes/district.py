@@ -3,15 +3,27 @@ from code.classes import house, battery, cable
 
 class District():
     '''
-    This class makes houses and batteries objects.
+    This class ...
     '''
     def __init__(self, district_number):
         self.district_number = district_number
-        self.grid_inputs = []
         self.batteries = []
         self.houses = []
+
+        # Houses and batteries in one list (only used for plot, maybe not so smart)
+        self.grid_inputs = []
+
+        # Dictionary of house-battery combinations (key: house, value: battery)
+        self.connections = {}
+
+        # Costs
         self.own_cost = 0
         self.shared_cost = 0
+
+        # Valid solution or not
+        self.valid = False
+
+        # Adding battery and house objects into the lists
         self.load_houses(f'data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv')
         self.load_batteries(f'data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv')
 
@@ -57,6 +69,8 @@ class District():
         for battery in self.batteries:
             self.own_cost += battery.price
 
+        return self.own_cost
+
     def calculate_shared_cost(self):
         '''
         Calculate the cost of the cables and batteries. Taking into account
@@ -77,7 +91,11 @@ class District():
         for battery in self.batteries:
             self.shared_cost += battery.price
 
+        return self.shared_cost
+
     def reset_grid(self):
+        # Clear connections (house-battery)
+        self.connections = {}
 
         # Clear all cable segments
         for house in self.houses:
@@ -86,3 +104,15 @@ class District():
         # Batteries back to current_capacity 0
         for battery in self.batteries:
             battery.current_capacity = 0
+
+    def valid_solution(self):
+        self.valid = True
+
+        for battery in self.batteries:
+            if battery.current_capacity > battery.max_capacity:
+                print(f'Capacity of battery ({battery.pos_x}, {battery.pos_y}) is exceeded with {battery.current_capacity - battery.max_capacity}')
+                self.valid = False
+
+        if len(self.connections) != len(self.houses):
+            #print('Not all houses are connected')
+            self.valid = False
