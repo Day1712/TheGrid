@@ -58,7 +58,7 @@ def hill_climber_algorithm(district, convergence_treshold = 20):
     '''
     no_improvements = 0
 
-    visualisation.setup_plot(district)
+    # house_x, house_y, house_colour, battery_x, battery_y, battery_colour = visualisation.setup_plot(district)
 
     while no_improvements < convergence_treshold:
         # Makes a copy of the district to work with
@@ -89,8 +89,8 @@ def hill_climber_algorithm(district, convergence_treshold = 20):
                 no_improvements = 0
 
         # PLOT PART BELOW
-        visualisation.draw(district)
-
+        # visualisation.draw(district)
+        
     return district
 
 
