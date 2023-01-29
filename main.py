@@ -17,11 +17,11 @@ random.create_all_routes(district)
 
 
 # ------------------------------ Hill Climber  ----------------------------
-#district = hill_climber.hill_climber_algorithm(district)
+district = hill_climber.hill_climber_algorithm(district)
 
 
 # -------------------------- Simulated Annealing --------------------------
-district = simulated_annealing.simulated_annealing_algorithm(district)
+#district = simulated_annealing.simulated_annealing_algorithm(district)
 
 
 # ----------------------- District Visualisation ---------------------------

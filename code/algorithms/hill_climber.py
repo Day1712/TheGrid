@@ -3,20 +3,14 @@ from code.classes import district
 import random
 import copy
 
-'''
-DUURT ONGEVEER EEN MINUUT
-
-
-Pseudo code:
-
-Genereer een random start state
-Herhaal tot de kosten na N-keer niet meer verbeteren:
-    Doe een kleine random aanpassing: ruil de batterijen om van 2 huizen
-    Als de kost is omhoog gaat:
-        terug naar vorige staat
-'''
-
 def swapping_connections(connections_dict):
+    '''
+    Input: dictionary of all house-battery connections (key: house, value: battery)
+
+    This function randomly chooses two houses. It switches the batteries only IF
+    that results in a valid solution (i.e. battery capacities not exceeded). It
+    updates the new house-battery routes and the dictionary.
+    '''
     continue_loop = True
 
     while continue_loop:
@@ -46,7 +40,19 @@ def swapping_connections(connections_dict):
                 # Stop the loop
                 continue_loop = False
 
-def hill_climber_algorithm(district, convergence_treshold = 10):
+def hill_climber_algorithm(district, convergence_treshold = 20):
+    '''
+    Input: starting district, convergence treshold
+    returns: new district with lowest cost
+
+
+    Pseudo code:
+    While not converged:
+        Begin with random start state
+        Induce small change to the state (randomly swap the battery connections of two houses)
+        If the cost goes up:
+            Disregard the change
+    '''
     no_improvements = 0
 
     while no_improvements < convergence_treshold:
@@ -79,11 +85,6 @@ def hill_climber_algorithm(district, convergence_treshold = 10):
 
     return district
 
-
-from code.algorithms import a_star_route, random as rando
-from code.classes import district
-import random
-import copy
 
 '''
 HERE IS THE CODE THAT STARTS WITH RANDOM BUT CREATES NEW ROUTES WITH A*.

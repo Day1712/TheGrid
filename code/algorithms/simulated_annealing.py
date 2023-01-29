@@ -5,25 +5,14 @@ import copy
 import random
 import math
 
-
-'''
-NOT WORKING PROPERLY YET. NEED TO DEBUG.
-
-
-Simulated Annealing,
-pseudo code of the lecture example:
-
-Herhaal:
-    Kies een random start state
-    Kies start temperatuur
-    Herhaal N iteraties:
-        Doe een kleine random aanpassing
-        Als random( ) > kans(oud, nieuw, temperatuur):
-            Maak de aanpassing ongedaan
-        Verlaag temperatuur
-
-'''
 def swapping_connections(connections_dict):
+    '''
+    Input: dictionary of all house-battery connections (key: house, value: battery)
+
+    This function randomly chooses two houses. It switches the batteries only IF
+    that results in a valid solution (i.e. battery capacities not exceeded). It
+    updates the new house-battery routes and the dictionary.
+    '''
     continue_loop = True
 
     while continue_loop:
@@ -54,9 +43,20 @@ def swapping_connections(connections_dict):
                 continue_loop = False
 
 
-def simulated_annealing_algorithm(district, temperature = 100, cooling_rate = 0.99, convergence_treshold = 100):
-    no_improvements = 0
+def simulated_annealing_algorithm(district, temperature = 1000, cooling_rate = 0.99):
+    '''
+    Input: starting district, temperature, cooling rate
+    returns: new district with lowest cost
 
+
+    Pseudo code:
+    While temperature > 1:
+        Begin with random start state
+        Induce small change to the state (randomly swap the battery connections of two houses)
+        If random number > probability(new_cost, old_cost, temperature):
+            Disregard the change
+        Lower the temperature
+    '''
     while temperature > 1:
         # Makes a copy of the district to work with
         new_district = copy.deepcopy(district)
@@ -73,22 +73,20 @@ def simulated_annealing_algorithm(district, temperature = 100, cooling_rate = 0.
         probability = math.exp(-delta / temperature)
 
         # if random falls in probabilty range, new district is accepted
-        if random.random() < probability:
+        if random.random() > probability:
 
+            # Return to the previous state
+            new_district = district
+
+        else:
+            # Keep the new state
             district = new_district
-            no_improvements = 0
 
             # Comment out if you don't want to see the costs go down:
             print(district.calculate_shared_cost())
 
-        else:
-            new_district = district
-            no_improvements += 1
-
+        # Lower the temperature
         temperature *= cooling_rate
 
-        # check for convergence
-        if no_improvements >= convergence_treshold:
-            break
 
     return district
