@@ -1,5 +1,6 @@
 from code.algorithms import a_star_route, random as rando
 from code.classes import district
+from code.visualisation import visualisation
 import random
 import copy
 
@@ -40,6 +41,8 @@ def swapping_connections(connections_dict):
                 # Stop the loop
                 continue_loop = False
 
+
+
 def hill_climber_algorithm(district, convergence_treshold = 20):
     '''
     Input: starting district, convergence treshold
@@ -54,6 +57,8 @@ def hill_climber_algorithm(district, convergence_treshold = 20):
             Disregard the change
     '''
     no_improvements = 0
+
+    visualisation.setup_plot(district)
 
     while no_improvements < convergence_treshold:
         # Makes a copy of the district to work with
@@ -82,6 +87,9 @@ def hill_climber_algorithm(district, convergence_treshold = 20):
                 no_improvements += 1
             else:
                 no_improvements = 0
+
+        # PLOT PART BELOW
+        visualisation.draw(district)
 
     return district
 
