@@ -33,6 +33,7 @@ class District():
 
     def load_batteries(self, file_path):
         """This function turns a csv file to a list of battery instances"""
+        battery_colours = ['red', 'green', 'blue', 'magenta', 'darkkhaki']
         battery_df_crude = pd.read_csv(file_path)
 
         # Split coordinate column in two seperate columns
@@ -41,7 +42,8 @@ class District():
                      battery_df_crude["capaciteit"]], axis=1)
 
         for battery_index, battery_data in battery_df.iterrows():
-            current_battery = battery.Battery(*tuple(map(float, battery_data)))
+            pos_x, pos_y, capacity = tuple(map(float, battery_data))
+            current_battery = battery.Battery(pos_x, pos_y, capacity, battery_colours[battery_index])
             self.grid_inputs.append(current_battery)
             self.batteries.append(current_battery)
 

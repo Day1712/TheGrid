@@ -57,6 +57,8 @@ def create_route(house, battery):
         if y == battery.pos_y:
             break
 
+    house.colour = battery.colour
+
 def create_all_routes(district):
     '''
     Creates routes for all houses to available batteries and calculates the
