@@ -1,4 +1,5 @@
 import csv
+import pandas as pd
 from code.classes import house, battery, cable
 
 class District():
@@ -30,32 +31,29 @@ class District():
         self.load_houses(f'data/Huizen&Batterijen/district_{district_number}/district-{district_number}_houses.csv')
         self.load_batteries(f'data/Huizen&Batterijen/district_{district_number}/district-{district_number}_batteries.csv')
 
-    def load_batteries(self, file_name):
-        with open(file_name, 'r') as f:
-            reader = csv.DictReader(f)
-            for row in reader:
+    def load_batteries(self, file_path):
+        """This function turns a csv file to a list of battery instances"""
+        battery_df_crude = pd.read_csv(file_path)
 
-                # Extract the x, y, and capacity from this specific battery file
-                location = [int(x) for x in row['positie'].split(',')]
-                x = location[0]
-                y = location[1]
-                capacity = row['capaciteit']
+        # Split coordinate column in two seperate columns
+        battery_df = pd.concat(
+                    [battery_df_crude["positie"].str.split(',', expand=True),
+                     battery_df_crude["capaciteit"]], axis=1)
 
-                # Add the battery to the list
-                self.grid_inputs.append(battery.Battery(x, y, capacity))
-                self.batteries.append(battery.Battery(x, y, capacity))
+        for battery_index, battery_data in battery_df.iterrows():
+            current_battery = battery.Battery(*tuple(map(float, battery_data)))
+            self.grid_inputs.append(current_battery)
+            self.batteries.append(current_battery)
 
-    def load_houses(self, file_name):
-        with open(file_name, 'r') as f:
-            reader = csv.reader(f)
 
-            # Skip the header row
-            next(reader)
-            for row in reader:
+    def load_houses(self, file_path):
+        """This function turns a csv file into a list of house instances"""
+        house_df = pd.read_csv(file_path)
 
-                # Loading the house with the x, y, and max output from the file
-                self.grid_inputs.append(house.House(row[0], row[1], row[2]))
-                self.houses.append(house.House(row[0], row[1], row[2]))
+        for house_index, house_data in house_df.iterrows():
+            current_house = house.House(*tuple(map(float, house_data)))
+            self.grid_inputs.append(current_house)
+            self.houses.append(current_house)
 
     # We won't really have to use the own cost anymore but I left it in for now
     def calculate_own_cost(self):
