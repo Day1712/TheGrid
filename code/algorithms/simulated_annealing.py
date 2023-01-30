@@ -5,6 +5,19 @@ import copy
 import random
 import math
 
+'''
+def new_route():
+
+new_houses = []
+for h in connections_dict:
+    if h.flag == False:
+        new_houses.append(h)
+
+#house = max(new_houses, key=lambda x: len(x.cables.segments))
+#house.flag = True
+
+'''
+
 def swapping_connections(connections_dict):
     '''
     Input: dictionary of all house-battery connections (key: house, value: battery)

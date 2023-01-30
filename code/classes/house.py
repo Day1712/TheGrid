@@ -12,3 +12,4 @@ class House():
         self.output = float(output)
         self.colour = None
         self.cables = cable.Cable()
+        self.flag = False
