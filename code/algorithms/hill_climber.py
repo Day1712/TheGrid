@@ -7,64 +7,57 @@ import copy
 def manhattan_distance(start, end):
     return abs(start[0] - end[0]) + abs(start[1] - end[1])
 
-def new_route(connections_dict):
-    # Pick random house
-    house = random.choice(list(connections_dict.keys()))
-
-    # Corresponding battery
-    battery = connections_dict[house]
-
-    # List of all the cable points that another cable can connect to
-    cable_coordinates = set()
-
-    for h in connections_dict:
-        if connections_dict[h] == battery and h != house:
-            for coordinate in h.cables.coordinates:
-                cable_coordinates.add(coordinate)
-
-    cable_coordinates = list(cable_coordinates)
-
-    # Calculate manhattan distances
+def find_nearest_index(start, coordinate_list):
+    '''
+    Given a starting point and a list of coordinates,
+    returns the index of the nearest coordinate of the list
+    '''
     distances = []
-    for coordinate in cable_coordinates:
-        distances.append(manhattan_distance(house.coordinate, coordinate))
+    for coordinate in coordinate_list:
+        distances.append(manhattan_distance(start, coordinate))
 
-    # Find the nearest point
-    nearest_index = np.argmin(distances)
+    return np.argmin(distances)
 
-    # Only change route if the nearest point is not the same location
-    if house.coordinate != cable_coordinates[nearest_index]:
-
-        # Delete previous route
-        house.cables.clear_route()
-
-        # Create route to the nearest point
-        house.cables.create_route(house.coordinate, cable_coordinates[nearest_index])
-
-        # Add the route from the point to the battery (so it stays connected to the battery)
-        house.cables.create_route(cable_coordinates[nearest_index], battery.coordinate)
-
-def swapping_connections(connections_dict):
+def swapping_connections(connections_dict, random_selection = 10):
     '''
     Input: dictionary of all house-battery connections (key: house, value: battery)
 
-    This function randomly chooses two houses. It switches the batteries only IF
-    that results in a valid solution (i.e. battery capacities not exceeded). It
-    updates the new house-battery routes and the dictionary.
+    - Randomly picks a house within the top of longest routes
+    - Finds nearest battery and the houses currently connected to that battery
+    - In random order, checks if there is a switch possible with one of the
+        potential houses.
+        - If solutions remains valid, the two houses switch from battery.
+        - New routes are created, connections are updated
+        - Loop ends
     '''
-    continue_loop = True
+    while True:
+        # Sort houses by segments length (longest route)
+        houses_by_segments = sorted(list(connections_dict.keys()), key=lambda x: len(x.cables.segments), reverse=True)
 
-    while continue_loop:
-        # Randomly picking two houses
-        house_1, house_2 = random.sample(list(connections_dict), 2)
-        battery_1, battery_2 = connections_dict[house_1], connections_dict[house_2]
+        # Randomly pick a house with the top-10 longest segments
+        house_1 = random.choice(houses_by_segments[0:random_selection])
+        battery_1 = connections_dict[house_1]
 
-        # Only swap if solution stays valid
-        if (battery_1.current_capacity - house_1.output + house_2.output) <= battery_1.max_capacity and (battery_2.current_capacity - house_2.output + house_1.output) <= battery_2.max_capacity:
+        # Find nearest battery
+        all_batteries = [battery.coordinate for battery in connections_dict.values()]
+        nearest_index = find_nearest_index(house_1.coordinate, all_batteries)
+        battery_2 = list(connections_dict.values())[nearest_index]
+
+        # Find houses connected to the nearest battery
+        potential_houses = [house for house, battery in connections_dict.items() if battery == battery_2]
+
+        # Shuffle the potential houses
+        random.shuffle(potential_houses)
+
+         # Check each potential house
+        for house_2 in potential_houses:
+            # Check if swapping results in a valid solution
+            if (battery_1.current_capacity - house_1.output + house_2.output <= battery_1.max_capacity) and \
+               (battery_2.current_capacity - house_2.output + house_1.output <= battery_2.max_capacity):
 
                 # Update battery capacities
-                battery_1.current_capacity += -house_1.output + house_2.output
-                battery_2.current_capacity += -house_2.output + house_1.output
+                battery_1.current_capacity -= house_1.output - house_2.output
+                battery_2.current_capacity -= house_2.output - house_1.output
 
                 # Remove previous cable segments
                 house_1.cables.clear_route()
@@ -83,7 +76,71 @@ def swapping_connections(connections_dict):
                 connections_dict[house_2] = battery_1
 
                 # Stop the loop
-                continue_loop = False
+                return
+
+def new_route(connections_dict, random_selection = 10):
+    '''
+    Input: dictionary of all house-battery connections (key: house, value: battery)
+
+    Out of a random selection, the house with the longest cable is chosen. Then,
+    it will find if there is a cable nearby that goes towards the same battery.
+    If so, it will recreate a route to go the that nearest point.
+    '''
+    # Pick random house
+    house = random.choice(list(connections_dict.keys()))
+    battery = connections_dict[house]
+
+    # List of all the cable points that another cable can connect to
+    cable_coordinates = set()
+    for h in connections_dict:
+        if connections_dict[h] == battery and h != house:
+            for coordinate in h.cables.coordinates:
+                cable_coordinates.add(coordinate)
+    cable_coordinates = list(cable_coordinates)
+
+    # Calculate manhattan distances and find nearest point
+    nearest_index = find_nearest_index(house.coordinate, cable_coordinates)
+
+    # Only change route if the nearest point is not the same location
+    if house.coordinate != cable_coordinates[nearest_index]:
+        # Delete previous route
+        house.cables.clear_route()
+        # Create route to the nearest point
+        house.cables.create_route(house.coordinate, cable_coordinates[nearest_index])
+        # Add the route from the point to the battery (so it stays connected to the battery)
+        house.cables.create_route(cable_coordinates[nearest_index], battery.coordinate)
+
+def new_route(connections_dict):
+    '''
+    Input: dictionary of all house-battery connections (key: house, value: battery)
+
+    Out of a random selection, the house with the longest cable is chosen. Then,
+    it will find if there is a cable nearby that goes towards the same battery.
+    If so, it will recreate a route to go the that nearest point.
+    '''
+    # Randomly pick a house
+    house = random.choice(list(connections_dict.keys()))
+    battery = connections_dict[house]
+
+    # List of all the cable points that another cable can connect to
+    cable_coordinates = set()
+    for h in connections_dict:
+        if connections_dict[h] == battery and h != house:
+            for coordinate in h.cables.coordinates:
+                cable_coordinates.add(coordinate)
+    cable_coordinates = list(cable_coordinates)
+
+    # Calculate manhattan distances and find nearest point
+    nearest_index = find_nearest_index(house.coordinate, cable_coordinates)
+
+    # Only change route if the nearest point is not the same location
+    if house.coordinate != cable_coordinates[nearest_index]:
+        # Delete previous route
+        house.cables.clear_route()
+        # Create route to the nearest point
+        house.cables.create_route(house.coordinate, cable_coordinates[nearest_index])
+        # Add the route from the point to the battery (so it stays connected to the battery)
+        house.cables.create_route(cable_coordinates[nearest_index], battery.coordinate)
 
 
 def hill_climber_algorithm(district, mutation_function, cost_type = 'shared', convergence_treshold = 50):
@@ -91,13 +148,12 @@ def hill_climber_algorithm(district, mutation_function, cost_type = 'shared', co
     Input: starting district, convergence treshold
     returns: new district with lowest cost
 
-
-    Pseudo code:
-    While not converged:
-        Begin with random start state
-        Induce small change to the state (randomly swap the battery connections of two houses)
-        If the cost goes up:
-            Disregard the change
+    - While not converged:
+        - Begin with random start state
+        - Induce small change to the state
+        - If the cost goes up:
+            - Disregard the change
+            - Keep track of convergence
     '''
     no_improvements = 0
 

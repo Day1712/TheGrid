@@ -17,16 +17,16 @@ random.create_all_routes(district)
 
 
 # ------------------------------ Hill Climber  ----------------------------
-district = hill_climber.hill_climber_algorithm(district, mutation_function = 'swapping_connections', cost_type = 'own')
-district = hill_climber.hill_climber_algorithm(district, mutation_function = 'new_route', cost_type = 'shared')
+#district = hill_climber.hill_climber_algorithm(district, mutation_function = 'swapping_connections', cost_type = 'own')
+#district = hill_climber.hill_climber_algorithm(district, mutation_function = 'new_route', cost_type = 'shared')
 
 
 # -------------------------- Simulated Annealing --------------------------
-# district = simulated_annealing.simulated_annealing_algorithm(district)
+district = simulated_annealing.simulated_annealing_algorithm(district, mutation_function = 'swapping_connections', cost_type = 'own')
+district = simulated_annealing.simulated_annealing_algorithm(district, mutation_function = 'new_route', cost_type = 'shared')
 
 
 # ----------------------- District Visualisation ---------------------------
-#visualisation.plot_per_battery(district)
 visualisation.colour_visualise(district)
 
 
