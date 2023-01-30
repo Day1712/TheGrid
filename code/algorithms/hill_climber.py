@@ -112,8 +112,6 @@ def hill_climber_algorithm(district, convergence_treshold = 20):
         # Swapping a house-battery connnection
         swapping_connections(new_district.connections)
 
-        # Making a new route
-        #new_route(new_district.connections)
 
         # Calculate costs
         new_cost = new_district.calculate_shared_cost()
@@ -143,6 +141,11 @@ def hill_climber_algorithm(district, convergence_treshold = 20):
         # PLOT PART BELOW
         #visualisation.draw(district)
 
+    # Making a new route
+    new_route(new_district.connections)
+    new_cost = new_district.calculate_shared_cost()
+    print("Start with changes to routes")
+    print(new_cost)
     return district
 
 
