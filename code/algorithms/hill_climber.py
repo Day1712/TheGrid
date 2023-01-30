@@ -110,9 +110,9 @@ def hill_climber_algorithm(district, mutation_function, cost_type = 'shared', co
         # Mutate the district by swapping connection and/or changing the routes
         if mutation_function == 'swapping_connections':
             swapping_connections(new_district.connections)
-        elif mutation_function == 'new_routes':
-            new_routes(new_district.connections)
-            
+        elif mutation_function == 'new_route':
+            new_route(new_district.connections)
+
         # Calculate costs
         if cost_type == 'own':
             new_cost = new_district.calculate_own_cost()
