@@ -8,7 +8,7 @@ def visualise(district):
     list_y = []
     list_colour = []
 
-    # Add the location and color of each input to the lists
+    # Add the location and colour of each input to the lists
     for input in district.grid_inputs:
         list_x.append(input.pos_x)
         list_y.append(input.pos_y)
@@ -43,7 +43,7 @@ def draw(district):
     battery_y = []
     battery_colour = []
 
-    # Add the location and color of each input to the lists
+    # Add the location and colour of each input to the lists
     for house in district.connections:
         house_x.append(house.pos_x)
         house_y.append(house.pos_y)
@@ -82,7 +82,7 @@ def setup_plot(district):
     battery_y = []
     battery_colour = []
 
-    # Add the location and color of each input to the lists
+    # Add the location and colour of each input to the lists
     for house in district.connections:
         house_x.append(house.pos_x)
         house_y.append(house.pos_y)
@@ -94,7 +94,7 @@ def setup_plot(district):
 
     return house_x, house_y, house_colour, battery_x, battery_y, battery_colour
 
-def color_visualise(district):
+def colour_visualise(district):
     house_x = []
     house_y = []
     house_colour = []
@@ -102,7 +102,7 @@ def color_visualise(district):
     battery_y = []
     battery_colour = []
 
-    # Add the location and color of each input to the lists
+    # Add the location and colour of each input to the lists
     for house in district.houses:
         house_x.append(house.pos_x)
         house_y.append(house.pos_y)
@@ -132,7 +132,7 @@ def color_visualise(district):
 
     plt.show()
 
-def updated_color_visualise(district):
+def updated_colour_visualise(district):
     house_x = []
     house_y = []
     house_colour = []
@@ -140,7 +140,7 @@ def updated_color_visualise(district):
     battery_y = []
     battery_colour = []
 
-    # Add the location and color of each input to the lists
+    # Add the location and colour of each input to the lists
     for house in district.connections:
         house_x.append(house.pos_x)
         house_y.append(house.pos_y)
@@ -179,7 +179,7 @@ def plot_per_battery(district):
         # Change the figure size
         plt.figure(figsize=(9,9))
 
-        # Add the location and color of each input to the lists
+        # Add the location and colour of each input to the lists
         for house in district.connections:
             if house.colour == current_colour:
                 house_x.append(house.pos_x)

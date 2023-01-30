@@ -79,14 +79,14 @@ def swapping_connections(connections_dict):
                 house_2.cables.create_route(house_2.coordinate, battery_1.coordinate)
 
                 # Updating the connections_dict with new connections
-                connections_dict[house_1] = battery_1
-                connections_dict[house_2] = battery_2
+                connections_dict[house_1] = battery_2
+                connections_dict[house_2] = battery_1
 
                 # Stop the loop
                 continue_loop = False
 
 
-def hill_climber_algorithm(district, mutation_function, cost_type = 'shared', convergence_treshold = 10):
+def hill_climber_algorithm(district, mutation_function, cost_type = 'shared', convergence_treshold = 50):
     '''
     Input: starting district, convergence treshold
     returns: new district with lowest cost
