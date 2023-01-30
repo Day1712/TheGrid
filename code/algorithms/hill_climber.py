@@ -18,6 +18,36 @@ def find_nearest_index(start, coordinate_list):
 
     return np.argmin(distances)
 
+def middle_point(list_coordinates):
+    x_values = [point[0] for point in list_coordinates]
+    y_values = [point[1] for point in list_coordinates]
+    x_mid = round(sum(x_values) / len(list_coordinates))
+    y_mid = round(sum(y_values) / len(list_coordinates))
+
+    return (x_mid, y_mid)
+
+def change_battery_location(connections_dict):
+    for battery in connections_dict.values():
+
+        # List of coordinates connected to one battery
+        cluster_coordinates = []
+        for house in connections_dict:
+            if connections_dict[house] == battery:
+                cluster_coordinates.append(house.coordinate)
+
+        # Find middle point of the cluster
+        new_location = middle_point(cluster_coordinates)
+
+        # Update battery to that location
+        battery.change_location(new_location)
+
+        for house in connections_dict:
+            if connections_dict[house] == battery:
+                # Delete previous route
+                house.cables.clear_route()
+                # Create route to the nearest point
+                house.cables.create_route(house.coordinate, battery.coordinate)
+
 def swapping_connections(connections_dict, random_selection = 10):
     '''
     Input: dictionary of all house-battery connections (key: house, value: battery)
@@ -166,6 +196,7 @@ def hill_climber_algorithm(district, mutation_function, cost_type = 'shared', co
         # Mutate the district by swapping connection and/or changing the routes
         if mutation_function == 'swapping_connections':
             swapping_connections(new_district.connections)
+            change_battery_location(new_district.connections)
         elif mutation_function == 'new_route':
             new_route(new_district.connections)
 

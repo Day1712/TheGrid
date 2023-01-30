@@ -11,6 +11,7 @@ class Cable():
         # kabels daarbij te matchen voor beter overzicht (begreep ik dat goed?)
 
     def create_route(self, start, end):
+        # TODO think about how to move the route away from the edge
         x1, y1 = start
         x2, y2 = end
 
@@ -25,6 +26,7 @@ class Cable():
                 y1 += 1
             else:
                 y1 -= 1
+
             self.coordinates.append((x1, y1))
 
         self.create_cable_segments()
