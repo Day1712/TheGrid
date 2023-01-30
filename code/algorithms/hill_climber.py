@@ -27,7 +27,6 @@ def new_route(connections_dict):
         for coordinate in house.cables.coordinates:
             cable_coordinates.add(coordinate)
 
-
     # Calculate manhattan distances
     distances = []
     for coordinate in list(cable_coordinates):
@@ -88,7 +87,8 @@ def swapping_connections(connections_dict):
                 # Stop the loop
                 continue_loop = False
 
-def hill_climber_algorithm(district, convergence_treshold = 20):
+# TODO cost function input (own or shared). Default shared I think?
+def hill_climber_algorithm(district, convergence_treshold = 10):
     '''
     Input: starting district, convergence treshold
     returns: new district with lowest cost
@@ -117,12 +117,10 @@ def hill_climber_algorithm(district, convergence_treshold = 20):
         new_cost = new_district.calculate_shared_cost()
         old_cost = district.calculate_shared_cost()
 
-        #print(new_cost)
+        print(new_cost)
 
-        new_district.valid_solution()
-
-        # Undo if solution is costs went up (or district is not valid)
-        if new_cost > old_cost or not new_district.valid:
+        # Undo if solution is costs went up
+        if new_cost > old_cost:
             new_district = district
 
         else:

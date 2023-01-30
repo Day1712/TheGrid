@@ -27,12 +27,14 @@ class Cable():
                 y1 -= 1
             self.coordinates.append((x1, y1))
 
+        self.create_cable_segments()
+
     # A segment consists out of two adjacent points in the route
     def create_cable_segments(self):
         for i in range(len(self.coordinates) - 1):
             self.segments.append((self.coordinates[i], self.coordinates[i + 1]))
 
-    # Start clean
+    # Start clean (but connections in district is remains the same)
     def clear_route(self):
         self.coordinates = []
         self.segments = []
