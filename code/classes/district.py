@@ -17,9 +17,6 @@ class District():
         # Dictionary of house-battery combinations (key: house, value: battery)
         self.connections = {}
 
-        # Set of cable segments
-        self.cable_segments = set()
-
         # Costs
         self.own_cost = 0
         self.shared_cost = 0
@@ -57,13 +54,14 @@ class District():
             self.grid_inputs.append(current_house)
             self.houses.append(current_house)
 
-    # We won't really have to use the own cost anymore but I left it in for now
     def calculate_own_cost(self):
         '''
         Calculate the cost of the cables and batteries. All shared segments are
         counted without taking overlapping ones into account (thus this is own
         cost and not shared)
         '''
+        self.own_cost = 0
+
         for house in self.houses:
             self.own_cost += house.cables.price * len(house.cables.segments)
 
@@ -78,12 +76,17 @@ class District():
         Calculate the cost of the cables and batteries. Taking into account
         overlap.
         '''
+        self.shared_cost = 0
+        segments = set()
+
         # Create a set of the union all house cable segments in the grid
-        self.all_cable_segments()
+        for house in self.houses:
+            for segment in house.cables.segments:
+                segments.add(segment)
 
         # Multiply the cost of the first house cable price (because all cables
         # have the same cost)
-        self.shared_cost = self.houses[0].cables.price * len(self.cable_segments)
+        self.shared_cost = self.houses[0].cables.price * len(segments)
 
         # Add cost for each battery
         for battery in self.batteries:
@@ -114,12 +117,3 @@ class District():
         if len(self.connections) != len(self.houses):
             print('Not all houses are connected')
             self.valid = False
-
-    def all_cable_segments(self):
-        self.cable_segments = set()
-
-        for house in self.houses:
-            house.cables.create_cable_segments()
-
-            for segment in house.cables.segments:
-                self.cable_segments.add(segment)
