@@ -79,8 +79,8 @@ def swapping_connections(connections_dict):
                 house_2.cables.create_route(house_2.coordinate, battery_1.coordinate)
 
                 # Updating the connections_dict with new connections
-                connections_dict[house_1] = battery_1
-                connections_dict[house_2] = battery_2
+                connections_dict[house_1] = battery_2
+                connections_dict[house_2] = battery_1
 
                 # Stop the loop
                 continue_loop = False

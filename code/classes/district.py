@@ -115,5 +115,5 @@ class District():
                 self.valid = False
 
         if len(self.connections) != len(self.houses):
-            print('Not all houses are connected')
+            # print('Not all houses are connected')
             self.valid = False
