@@ -1,8 +1,51 @@
 from code.algorithms import a_star_route, random as rando
-from code.classes import district
 from code.visualisation import visualisation
+from code.classes import district
+import numpy as np
 import random
 import copy
+
+def manhattan_distance(start, end):
+    return abs(start[0] - end[0]) + abs(start[1] - end[1])
+
+def new_route(connections_dict):
+    # Pick house with longest route
+    #house = max(connections_dict, key=lambda x: len(x.cables.segments))
+
+    # Pick random house
+    house = random.choice(list(connections_dict.keys()))
+
+    # Corresponding battery
+    battery = connections_dict[house]
+
+    # List of all houses connected to the battery
+    same_battery_houses = [k for k, v in connections_dict.items() if v == battery and k != house]
+
+    # List of all the cable points that another cable can connect to
+    cable_coordinates = set()
+    for house in same_battery_houses:
+        for coordinate in house.cables.coordinates:
+            cable_coordinates.add(coordinate)
+
+
+    # Calculate manhattan distances
+    distances = []
+    for coordinate in list(cable_coordinates):
+        if coordinate != None:
+            distances.append(manhattan_distance(house.coordinate, coordinate))
+
+    # Find the nearest
+    nearest_index = np.argmin(distances)
+
+    # Delete previous
+    house.cables.clear_route()
+
+    # Create route to the nearest point
+    house.cables.create_route(house.coordinate, list(cable_coordinates)[nearest_index])
+
+    # Add the route from the point to the battery (so it stays connected to the battery)
+    house.cables.create_route(list(cable_coordinates)[nearest_index], battery.coordinate)
+
 
 def swapping_connections(connections_dict):
     '''
@@ -27,12 +70,16 @@ def swapping_connections(connections_dict):
                 battery_2.current_capacity += -house_2.output + house_1.output
 
                 # Remove previous cable segments
-                house_1.cables.cable_segments = []
-                house_2.cables.cable_segments = []
+                house_1.cables.clear_route()
+                house_2.cables.clear_route()
+
+                # Update colours
+                house_1.colour = battery_2.colour
+                house_2.colour = battery_1.colour
 
                 # Create new cable routes
-                rando.create_route(house_1, battery_2)
-                rando.create_route(house_2, battery_1)
+                house_1.cables.create_route(house_1.coordinate, battery_2.coordinate)
+                house_2.cables.create_route(house_2.coordinate, battery_1.coordinate)
 
                 # Updating the connections_dict with new connections
                 connections_dict[house_1] = battery_1
@@ -40,8 +87,6 @@ def swapping_connections(connections_dict):
 
                 # Stop the loop
                 continue_loop = False
-
-
 
 def hill_climber_algorithm(district, convergence_treshold = 20):
     '''
@@ -67,20 +112,24 @@ def hill_climber_algorithm(district, convergence_treshold = 20):
         # Swapping a house-battery connnection
         swapping_connections(new_district.connections)
 
+        # Making a new route
+        #new_route(new_district.connections)
+
         # Calculate costs
         new_cost = new_district.calculate_shared_cost()
         old_cost = district.calculate_shared_cost()
 
+        #print(new_cost)
+
+        new_district.valid_solution()
+
         # Undo if solution is costs went up (or district is not valid)
-        if new_cost > old_cost:
+        if new_cost > old_cost or not new_district.valid:
             new_district = district
 
         else:
             # Continue with the new_district if costs go down
             district = new_district
-
-            # Comment out if you don't want to see the costs go down:
-            print(district.calculate_shared_cost())
 
             # Check if local minimum is found
             if new_cost == old_cost:
@@ -88,9 +137,12 @@ def hill_climber_algorithm(district, convergence_treshold = 20):
             else:
                 no_improvements = 0
 
+            # Comment out if you don't want to see the costs go down:
+            print(new_cost)
+
         # PLOT PART BELOW
-        # visualisation.draw(district)
-        
+        #visualisation.draw(district)
+
     return district
 
 

@@ -4,7 +4,7 @@ from code.algorithms import random, a_star_route, hill_climber, simulated_anneal
 from code.experiments import experiment1
 
 # -------------------------------- Input ----------------------------------
-district_number = 1
+district_number = 3
 experiment_runs = 500
 
 
@@ -18,8 +18,7 @@ random.create_all_routes(district)
 
 # ------------------------------ Hill Climber  ----------------------------
 district = hill_climber.hill_climber_algorithm(district)
-for battery in district.batteries:
-    print(battery.current_capacity)
+
 
 # -------------------------- Simulated Annealing --------------------------
 # district = simulated_annealing.simulated_annealing_algorithm(district)

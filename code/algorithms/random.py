@@ -23,46 +23,9 @@ def random_available_battery(house, battery_list):
     # Only returns -1 when there are no batteries available
     return -1
 
-def create_route(house, battery):
-    '''
-    First goes right or left in the direction of the battery. Then goes up or down.
-    '''
-    x = house.pos_x
-    y = house.pos_y
-
-    # If the cable is left from the battery, the route goes right
-    while x < battery.pos_x:
-        x += 1
-        house.cables.add_cable_segment((x - 1, y), (x, y))
-        if x == battery.pos_x:
-            break
-    # If the cable is right from the battery, the route goes left
-    while x > battery.pos_x:
-        x -= 1
-        house.cables.add_cable_segment((x + 1, y), (x, y))
-        if x == battery.pos_x:
-            break
-
-    # If the cable is under from the battery, the route goes up
-    while y < battery.pos_y:
-        y += 1
-        house.cables.add_cable_segment((x, y - 1), (x, y))
-        if y == battery.pos_y:
-            break
-
-    # If the cable is above from the battery, the route goes down
-    while y > battery.pos_y:
-        y -= 1
-        house.cables.add_cable_segment((x, y + 1), (x, y))
-        if y == battery.pos_y:
-            break
-
-    house.colour = battery.colour
-
 def create_all_routes(district):
     '''
-    Creates routes for all houses to available batteries and calculates the
-    cost for the overall district.
+    Finds a valid solution based on random house-battery connections.
     '''
     while not district.valid:
 
@@ -81,15 +44,16 @@ def create_all_routes(district):
             # If loop is not broken, there is a house-battery connection!
             district.connections[house] = district.batteries[chosen_battery_index]
 
-            # It will create a route between house and battery
-            create_route(house, district.batteries[chosen_battery_index])
-
             # End the while-loop if it can
             district.valid_solution()
+
+    # It will create a route between house and battery
+    for house in district.connections:
+        house.cables.create_route(house.coordinate, district.connections[house].coordinate)
+
+        # Match the house colour to the battery
+        house.colour = district.connections[house].colour
 
     # Update costs
     district.calculate_own_cost()
     district.calculate_shared_cost()
-
-    # Update coordinates (only for A* routes)
-    district.update_cable_coordinates()

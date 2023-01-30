@@ -17,8 +17,8 @@ class District():
         # Dictionary of house-battery combinations (key: house, value: battery)
         self.connections = {}
 
-        # Set of cable coordinates (for a* routes)
-        self.cable_coordinates = set()
+        # Set of cable segments
+        self.cable_segments = set()
 
         # Costs
         self.own_cost = 0
@@ -64,9 +64,8 @@ class District():
         counted without taking overlapping ones into account (thus this is own
         cost and not shared)
         '''
-
         for house in self.houses:
-            self.own_cost += house.cables.price * len(house.cables.cable_segments)
+            self.own_cost += house.cables.price * len(house.cables.segments)
 
         # Add cost for each battery
         for battery in self.batteries:
@@ -79,16 +78,12 @@ class District():
         Calculate the cost of the cables and batteries. Taking into account
         overlap.
         '''
-
         # Create a set of the union all house cable segments in the grid
-        unique_segments = set()
-        for house in self.houses:
-            for segment in house.cables.cable_segments:
-                unique_segments.add(segment)
+        self.all_cable_segments()
 
         # Multiply the cost of the first house cable price (because all cables
         # have the same cost)
-        self.shared_cost = self.houses[0].cables.price * len(unique_segments)
+        self.shared_cost = self.houses[0].cables.price * len(self.cable_segments)
 
         # Add cost for each battery
         for battery in self.batteries:
@@ -102,7 +97,7 @@ class District():
 
         # Clear all cable segments
         for house in self.houses:
-            house.cables.clear_segments()
+            house.cables.clear_route()
 
         # Batteries back to current_capacity 0
         for battery in self.batteries:
@@ -120,8 +115,11 @@ class District():
             print('Not all houses are connected')
             self.valid = False
 
-    # Function is only for the A* routes
-    def update_cable_coordinates(self):
+    def all_cable_segments(self):
+        self.cable_segments = set()
+
         for house in self.houses:
-            for coordinate in house.cables.get_route_list():
-                self.cable_coordinates.add(coordinate)
+            house.cables.create_cable_segments()
+
+            for segment in house.cables.segments:
+                self.cable_segments.add(segment)

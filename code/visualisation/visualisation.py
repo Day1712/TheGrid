@@ -17,9 +17,6 @@ def visualise(district):
     # Change the figure size
     plt.figure(figsize=(9,9))
 
-    # low priority TODO: find a way to plot only the decimals ticks while having
-    # a grid for every unit
-
     # Make scatter plot with grid
     plt.grid(which = 'both')
     plt.title(f'District {district.district_number} (with shared cost of {district.shared_cost})')
@@ -28,11 +25,11 @@ def visualise(district):
     plt.yticks(range(min(list_y), max(list_y) + 1), fontsize = 7)
 
     # Add the plot of the cables
-
-    for house in district.houses:
-
-        x, y = zip(*house.cables.get_route_list())
-        plt.plot(x, y, c = 'blue')
+    for house in district.connections:
+        for segment in house.cables.segments:
+            x = [point[0] for point in segment]
+            y = [point[1] for point in segment]
+            plt.plot(x, y, c = house.colour)
 
     plt.show()
 
@@ -63,9 +60,10 @@ def draw(district):
 
     # Add the plot of the cables
     for house in district.connections:
-
-        x, y = zip(*house.cables.get_route_list())
-        plt.plot(x, y, c = house.colour)
+        for segment in house.cables.segments:
+            x = [point[0] for point in segment]
+            y = [point[1] for point in segment]
+            plt.plot(x, y, c = house.colour)
 
     plt.title(f'District {district.district_number} (with shared cost of {district.shared_cost})')
     plt.draw()
@@ -118,9 +116,6 @@ def color_visualise(district):
     # Change the figure size
     plt.figure(figsize=(9,9))
 
-    # low priority TODO: find a way to plot only the decimals ticks while having
-    # a grid for every unit
-
     # Make scatter plot with grid
     plt.grid(which = 'both')
     plt.scatter(house_x, house_y, c = house_colour, marker = 'o', zorder = 3)
@@ -129,13 +124,10 @@ def color_visualise(district):
     plt.yticks(range(min(house_y + battery_y), max(house_y + battery_y) + 1), fontsize = 7)
 
     # Add the plot of the cables
-
-
-    for house in district.houses:
-
-        x, y = zip(*house.cables.get_route_list())
-        plt.plot(x, y, c = house.colour)
+    for house in district.connections:
+        for segment in house.cables.segments:
+            x = [point[0] for point in segment]
+            y = [point[1] for point in segment]
+            plt.plot(x, y, c = house.colour)
 
     plt.show()
-
-#
