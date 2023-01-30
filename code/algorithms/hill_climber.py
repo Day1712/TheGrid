@@ -86,7 +86,7 @@ def swapping_connections(connections_dict):
                 continue_loop = False
 
 
-def hill_climber_algorithm(district, mutation_function, cost_type = 'shared', convergence_treshold = 10):
+def hill_climber_algorithm(district, mutation_function, cost_type = 'shared', convergence_treshold = 50):
     '''
     Input: starting district, convergence treshold
     returns: new district with lowest cost
