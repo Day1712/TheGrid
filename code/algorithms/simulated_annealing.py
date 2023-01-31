@@ -51,7 +51,7 @@ def change_battery_location(connections_dict):
 
 
 
-def swapping_connections(connections_dict, random_selection = 10):
+def swapping_connections(connections_dict, random_selection):
     '''
     Input: dictionary of all house-battery connections (key: house, value: battery)
 
@@ -111,7 +111,7 @@ def swapping_connections(connections_dict, random_selection = 10):
                 # Stop the loop
                 return
 
-def new_route(connections_dict, random_selection = 10):
+def new_route(connections_dict):
     '''
     Input: dictionary of all house-battery connections (key: house, value: battery)
 
@@ -143,7 +143,7 @@ def new_route(connections_dict, random_selection = 10):
         # Add the route from the point to the battery (so it stays connected to the battery)
         house.cables.create_route(cable_coordinates[nearest_index], battery.coordinate)
 
-def simulated_annealing_algorithm(district, mutation_function, cost_type = 'shared', temperature = 5000, cooling_rate = 0.99):
+def simulated_annealing_algorithm(district, mutation_function, cost_type = 'shared', temperature = 5000, cooling_rate = 0.99, random_selection = 20):
     '''
     Input: starting district, temperature, cooling rate
     returns: new district with lowest cost
@@ -163,7 +163,7 @@ def simulated_annealing_algorithm(district, mutation_function, cost_type = 'shar
 
         # Mutate the district by swapping connection and/or changing the routes
         if mutation_function == 'swapping_connections':
-            swapping_connections(new_district.connections)
+            swapping_connections(new_district.connections, random_selection)
             change_battery_location(new_district.connections)
         elif mutation_function == 'new_route':
             new_route(new_district.connections)
@@ -191,7 +191,7 @@ def simulated_annealing_algorithm(district, mutation_function, cost_type = 'shar
             district = new_district
 
             # Comment out if you don't want to see the costs go down:
-            print(district.calculate_shared_cost())
+            #print(district.calculate_shared_cost())
 
         # Lower the temperature
         temperature *= cooling_rate

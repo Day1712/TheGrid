@@ -15,6 +15,8 @@ def experiment_random(district_number, number_of_runs):
     for i in range(number_of_runs):
         # Load the district (1, 2, or 3)
         the_district = district.District(district_number)
+
+        # Keep track of time
         start_time = time.time()
 
         # Connect the houses to batteries and plan the routes

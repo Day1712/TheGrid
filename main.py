@@ -1,11 +1,11 @@
 from code.classes import district
 from code.visualisation import visualisation, output
 from code.algorithms import random, a_star_route, hill_climber, simulated_annealing
-from code.experiments import experiment1
+from code.experiments import experiment_random, experiment_sim_ann, experiment_hill_climb
 
 # -------------------------------- Input ----------------------------------
 district_number = 1
-experiment_runs = 54
+experiment_runs = 1
 
 # --------------------------- Create district -----------------------------
 #district = district.District(district_number)
@@ -34,4 +34,6 @@ experiment_runs = 54
 
 
 # ----------------------------- Experiment ---------------------------------
-experiment1.experiment_random(district_number, experiment_runs)
+experiment_random.experiment_random(district_number, experiment_runs)
+experiment_hill_climb.experiment_hill_climb(district_number, experiment_runs)
+experiment_sim_ann.experiment_sim_ann(district_number, experiment_runs)

@@ -48,7 +48,7 @@ def change_battery_location(connections_dict):
                 # Create route to the nearest point
                 house.cables.create_route(house.coordinate, battery.coordinate)
 
-def swapping_connections(connections_dict, random_selection = 150):
+def swapping_connections(connections_dict, random_selection):
     '''
     Input: dictionary of all house-battery connections (key: house, value: battery)
 
@@ -134,18 +134,15 @@ def new_route(connections_dict):
 
     # Only change route if the nearest point is not the same location
     if house.coordinate != cable_coordinates[nearest_index]:
-        #print(house.cables.segments)
-        #print()
         # Delete previous route
         house.cables.clear_route()
         # Create route to the nearest point
         house.cables.create_route(house.coordinate, cable_coordinates[nearest_index])
         # Add the route from the point to the battery (so it stays connected to the battery)
         house.cables.create_route(cable_coordinates[nearest_index], battery.coordinate)
-        #print(house.cables.segments)
 
 
-def hill_climber_algorithm(district, mutation_function, cost_type = 'shared', convergence_treshold = 50):
+def hill_climber_algorithm(district, mutation_function, cost_type = 'shared', convergence_treshold = 50, random_selection = 20):
     '''
     Input: starting district, convergence treshold
     returns: new district with lowest cost
@@ -158,18 +155,16 @@ def hill_climber_algorithm(district, mutation_function, cost_type = 'shared', co
             - Keep track of convergence
     '''
     no_improvements = 0
-    cost_list = []
-    iterations = []
-    iteration = 0
+
     # house_x, house_y, house_colour, battery_x, battery_y, battery_colour = visualisation.setup_plot(district)
-    fig, ax1, ax2 = visualisation.setup_plot(district)
+
     while no_improvements < convergence_treshold:
         # Makes a copy of the district to work with
         new_district = copy.deepcopy(district)
 
         # Mutate the district by swapping connection and/or changing the routes
         if mutation_function == 'swapping_connections':
-            swapping_connections(new_district.connections)
+            swapping_connections(new_district.connections, random_selection)
             #change_battery_location(new_district.connections)
         elif mutation_function == 'new_route':
             new_route(new_district.connections)
@@ -182,29 +177,24 @@ def hill_climber_algorithm(district, mutation_function, cost_type = 'shared', co
             new_cost = new_district.calculate_shared_cost()
             old_cost = district.calculate_shared_cost()
 
-
         # Undo if solution is costs went up
         if new_cost > old_cost:
             new_district = district
-            cost_list.append(old_cost)
 
         else:
             # Continue with the new_district if costs go down
             district = new_district
 
             # Comment out if you don't want to see the costs go down:
-            print(new_cost)
+            #print(new_cost)
 
             # Check if local minimum is found
             if new_cost == old_cost:
                 no_improvements += 1
             else:
                 no_improvements = 0
-            cost_list.append(new_cost)
 
-        iteration += 1
-        iterations.append(iteration)
         # PLOT PART BELOW
         #visualisation.draw(district)
-        visualisation.draw_district(district, fig, ax1, ax2, cost_list, iterations)
+
     return district
