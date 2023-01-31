@@ -51,7 +51,7 @@ def experiment_sim_ann(district_number, number_of_runs):
         end_time = time.time() - start_time
 
         # Save the results
-        data['algorithm'].append('random')
+        data['algorithm'].append('simulated annealing')
         data['district'].append(district_number)
         data['parameters'].append(f'temperature of {temperature} and random selection of {random_selection}')
         data['shared cost'].append(the_district.shared_cost)
@@ -60,6 +60,8 @@ def experiment_sim_ann(district_number, number_of_runs):
 
         # Start clean next iteration
         the_district.reset_grid()
+
+        print(f'We finished loop {i+1} of simulated annealing experiment')
 
     # Save results as csv
     df = pd.DataFrame(data)
