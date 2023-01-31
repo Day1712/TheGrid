@@ -4,7 +4,7 @@ from code.algorithms import random, a_star_route, hill_climber, simulated_anneal
 from code.experiments import experiment1
 
 # -------------------------------- Input ----------------------------------
-district_number = 3
+district_number = 1
 experiment_runs = 500
 
 

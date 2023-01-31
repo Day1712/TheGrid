@@ -48,7 +48,7 @@ def change_battery_location(connections_dict):
                 # Create route to the nearest point
                 house.cables.create_route(house.coordinate, battery.coordinate)
 
-def swapping_connections(connections_dict, random_selection = 10):
+def swapping_connections(connections_dict, random_selection = 150):
     '''
     Input: dictionary of all house-battery connections (key: house, value: battery)
 
@@ -108,37 +108,6 @@ def swapping_connections(connections_dict, random_selection = 10):
                 # Stop the loop
                 return
 
-def new_route(connections_dict, random_selection = 10):
-    '''
-    Input: dictionary of all house-battery connections (key: house, value: battery)
-
-    Out of a random selection, the house with the longest cable is chosen. Then,
-    it will find if there is a cable nearby that goes towards the same battery.
-    If so, it will recreate a route to go the that nearest point.
-    '''
-    # Pick random house
-    house = random.choice(list(connections_dict.keys()))
-    battery = connections_dict[house]
-
-    # List of all the cable points that another cable can connect to
-    cable_coordinates = set()
-    for h in connections_dict:
-        if connections_dict[h] == battery and h != house:
-            for coordinate in h.cables.coordinates:
-                cable_coordinates.add(coordinate)
-    cable_coordinates = list(cable_coordinates)
-
-    # Calculate manhattan distances and find nearest point
-    nearest_index = find_nearest_index(house.coordinate, cable_coordinates)
-
-    # Only change route if the nearest point is not the same location
-    if house.coordinate != cable_coordinates[nearest_index]:
-        # Delete previous route
-        house.cables.clear_route()
-        # Create route to the nearest point
-        house.cables.create_route(house.coordinate, cable_coordinates[nearest_index])
-        # Add the route from the point to the battery (so it stays connected to the battery)
-        house.cables.create_route(cable_coordinates[nearest_index], battery.coordinate)
 
 def new_route(connections_dict):
     '''
@@ -196,7 +165,7 @@ def hill_climber_algorithm(district, mutation_function, cost_type = 'shared', co
         # Mutate the district by swapping connection and/or changing the routes
         if mutation_function == 'swapping_connections':
             swapping_connections(new_district.connections)
-            change_battery_location(new_district.connections)
+            #change_battery_location(new_district.connections)
         elif mutation_function == 'new_route':
             new_route(new_district.connections)
 
