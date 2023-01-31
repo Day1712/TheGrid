@@ -1,13 +1,39 @@
 from code.algorithms import random
 from code.classes import district
+import pandas as pd
+import time
 
-def experiment(district_number, number_of_runs):
-    all_costs = []
+def experiment_random(district_number, number_of_runs):
+    # Create data dictionary for the results
+    data = {'algorithm': [],
+            'district': [],
+            'parameters': [],
+            'shared cost': [],
+            'own cost': [],
+            'time': []}
+
     for i in range(number_of_runs):
-        new_district = district.District(district_number)
-        random.create_all_routes(new_district)
-        all_costs.append(new_district.shared_cost)
+        # Load the district (1, 2, or 3)
+        the_district = district.District(district_number)
+        start_time = time.time()
 
-    print(f'The average shared costs over {number_of_runs} runs is {sum(all_costs) / number_of_runs}')
+        # Connect the houses to batteries and plan the routes
+        random.create_all_routes(the_district)
 
-    return
+        # Stop the clock
+        end_time = time.time() - start_time
+
+        # Save the results
+        data['algorithm'].append('random')
+        data['district'].append(district_number)
+        data['parameters'].append('N/A')
+        data['shared cost'].append(the_district.shared_cost)
+        data['own cost'].append(the_district.own_cost)
+        data['time'].append(end_time)
+
+        # Start clean next iteration
+        the_district.reset_grid()
+
+    # Save results as csv
+    df = pd.DataFrame(data)
+    df.to_csv('experiment_random.csv', header=True)

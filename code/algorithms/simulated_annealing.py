@@ -126,7 +126,7 @@ def new_route(connections_dict, random_selection = 10):
     # List of all the cable points that another cable can connect to
     cable_coordinates = set()
     for h in connections_dict:
-        if connections_dict[h] == battery and h != house:
+        if h != house:
             for coordinate in h.cables.coordinates:
                 cable_coordinates.add(coordinate)
     cable_coordinates = list(cable_coordinates)
