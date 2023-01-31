@@ -4,7 +4,7 @@ from code.algorithms import random, a_star_route, hill_climber, simulated_anneal
 from code.experiments import experiment1
 
 # -------------------------------- Input ----------------------------------
-district_number = 1
+district_number = 3
 experiment_runs = 500
 
 
@@ -14,7 +14,7 @@ district = district.District(district_number)
 
 # ----------------------------- Random Routes ------------------------------
 random.create_all_routes(district)
-
+# visualisation.draw_district(district)
 
 # ------------------------------ Hill Climber  ----------------------------
 district = hill_climber.hill_climber_algorithm(district, mutation_function = 'swapping_connections', cost_type = 'own')
@@ -27,7 +27,7 @@ district = hill_climber.hill_climber_algorithm(district, mutation_function = 'ne
 
 
 # ----------------------- District Visualisation ---------------------------
-visualisation.colour_visualise(district)
+# visualisation.colour_visualise(district)
 
 
 # ------------------------------ Output ------------------------------------
@@ -35,4 +35,4 @@ visualisation.colour_visualise(district)
 
 
 # ----------------------------- Experiment ---------------------------------
-#experiment1.experiment(district_number, experiment_runs)
+# experiment1.experiment(district_number, experiment_runs)

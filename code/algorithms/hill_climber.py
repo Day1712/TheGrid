@@ -134,12 +134,15 @@ def new_route(connections_dict):
 
     # Only change route if the nearest point is not the same location
     if house.coordinate != cable_coordinates[nearest_index]:
+        #print(house.cables.segments)
+        #print()
         # Delete previous route
         house.cables.clear_route()
         # Create route to the nearest point
         house.cables.create_route(house.coordinate, cable_coordinates[nearest_index])
         # Add the route from the point to the battery (so it stays connected to the battery)
         house.cables.create_route(cable_coordinates[nearest_index], battery.coordinate)
+        #print(house.cables.segments)
 
 
 def hill_climber_algorithm(district, mutation_function, cost_type = 'shared', convergence_treshold = 50):
@@ -155,9 +158,11 @@ def hill_climber_algorithm(district, mutation_function, cost_type = 'shared', co
             - Keep track of convergence
     '''
     no_improvements = 0
-
+    cost_list = []
+    iterations = []
+    iteration = 0
     # house_x, house_y, house_colour, battery_x, battery_y, battery_colour = visualisation.setup_plot(district)
-
+    fig, ax1, ax2 = visualisation.setup_plot(district)
     while no_improvements < convergence_treshold:
         # Makes a copy of the district to work with
         new_district = copy.deepcopy(district)
@@ -177,9 +182,11 @@ def hill_climber_algorithm(district, mutation_function, cost_type = 'shared', co
             new_cost = new_district.calculate_shared_cost()
             old_cost = district.calculate_shared_cost()
 
+
         # Undo if solution is costs went up
         if new_cost > old_cost:
             new_district = district
+            cost_list.append(old_cost)
 
         else:
             # Continue with the new_district if costs go down
@@ -193,8 +200,11 @@ def hill_climber_algorithm(district, mutation_function, cost_type = 'shared', co
                 no_improvements += 1
             else:
                 no_improvements = 0
+            cost_list.append(new_cost)
 
+        iteration += 1
+        iterations.append(iteration)
         # PLOT PART BELOW
         #visualisation.draw(district)
-
+        visualisation.draw_district(district, fig, ax1, ax2, cost_list, iterations)
     return district
