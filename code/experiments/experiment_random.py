@@ -38,4 +38,4 @@ def experiment_random(district_number, number_of_runs):
 
     # Save results as csv
     df = pd.DataFrame(data)
-    df.to_csv('experiment_random.csv', header=True)
+    df.to_csv('experiment_random3.csv', header=True)
