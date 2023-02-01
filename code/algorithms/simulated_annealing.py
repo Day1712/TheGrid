@@ -143,7 +143,7 @@ def new_route(connections_dict):
         # Add the route from the point to the battery (so it stays connected to the battery)
         house.cables.create_route(cable_coordinates[nearest_index], battery.coordinate)
 
-def simulated_annealing_algorithm(district, mutation_function, cost_type = 'shared', temperature = 5000, cooling_rate = 0.99, random_selection = 20):
+def simulated_annealing_algorithm(district, mutation_function, cost_type = 'shared', plot = "y", temperature = 5000, cooling_rate = 0.99, random_selection = 20):
     '''
     Input: starting district, temperature, cooling rate
     returns: new district with lowest cost
@@ -157,6 +157,13 @@ def simulated_annealing_algorithm(district, mutation_function, cost_type = 'shar
             Disregard the change
         Lower the temperature
     '''
+
+    if plot == "y":
+        fig, ax1, ax2 = visualisation.setup_plot(district)
+        iterations = []
+        cost_list = []
+        iteration = 1
+
     while temperature > 1:
         # Makes a copy of the district to work with
         new_district = copy.deepcopy(district)
@@ -164,7 +171,7 @@ def simulated_annealing_algorithm(district, mutation_function, cost_type = 'shar
         # Mutate the district by swapping connection and/or changing the routes
         if mutation_function == 'swapping_connections':
             swapping_connections(new_district.connections, random_selection)
-            change_battery_location(new_district.connections)
+            # change_battery_location(new_district.connections)
         elif mutation_function == 'new_route':
             new_route(new_district.connections)
 
@@ -185,16 +192,26 @@ def simulated_annealing_algorithm(district, mutation_function, cost_type = 'shar
 
             # Return to the previous state
             new_district = district
+            if plot == "y":
+                cost_list.append(new_cost)
 
         else:
             # Keep the new state
             district = new_district
+            if plot == "y":
+                cost_list.append(old_cost)
 
             # Comment out if you don't want to see the costs go down:
             #print(district.calculate_shared_cost())
 
         # Lower the temperature
         temperature *= cooling_rate
+
+        if plot == "y":
+            iterations.append(iteration)
+            iteration += 1
+        if plot == "y":
+            visualisation.draw_district(district, fig, ax1, ax2, cost_list, iterations)
 
 
     return district
