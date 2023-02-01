@@ -8,7 +8,7 @@ class House():
         self.pos_x = int(pos_x)
         self.pos_y = int(pos_y)
         self.coordinate = (self.pos_x, self.pos_y)
-        self.location = f'{pos_x}, {pos_y}' # Unnecessary, just for json
+        self.location = f'{pos_x}, {pos_y}'
         self.output = float(output)
         self.colour = None
         self.cables = cable.Cable()

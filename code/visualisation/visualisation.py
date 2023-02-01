@@ -107,7 +107,7 @@ def draw_district(district, fig, ax1, ax2, cost_list, iterations):
     ax1.scatter(battery_x, battery_y, c = battery_colour, marker = 's', zorder = 3)
     #ax1.set_xticks(range(min(house_x + battery_x), max(house_x + battery_x) + 1), fontsize = 7)
     #ax1.set_yticks(range(min(house_y + battery_y), max(house_y + battery_y) + 1), fontsize = 7)
-    ax1.set_title(f"District {district.district_number} (with shared cost of {district.shared_cost})")
+    ax1.set_title(f"District {district.district_number}")
     ax1.set_xlabel("x")
     ax1.set_ylabel("y")
 

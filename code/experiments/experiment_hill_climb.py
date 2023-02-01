@@ -13,6 +13,11 @@ def experiment_hill_climb(district_number, number_of_runs):
             'own cost': [],
             'time': []}
 
+    # Set parameter changes
+    midpoint = number_of_runs // 2
+    low_random_selection = 50
+    high_random_selection = 150
+
     for i in range(number_of_runs):
         # Load the district (1, 2, or 3)
         the_district = district.District(district_number)
@@ -21,10 +26,10 @@ def experiment_hill_climb(district_number, number_of_runs):
         random.create_all_routes(the_district)
 
         # Parameters
-        if i <= 27:
-            random_selection =  50
+        if i <= midpoint:
+            random_selection = low_random_selection
         else:
-            random_selection = 150
+            random_selection = high_random_selection
 
         # Keep track of time
         start_time = time.time()

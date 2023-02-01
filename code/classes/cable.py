@@ -6,33 +6,54 @@ class Cable():
         self.coordinates = []
         self.segments = [] # Example: [ ((1,1), (1,2)), ((1,2), (1,3)) ]
         self.price = 9
-        # TODO net zoals bij huis en batterij hier ook een kleur toe te wijzen.
-        # Tip van wouter was om batterijen verschillende kleuren te geven en de
-        # kabels daarbij te matchen voor beter overzicht (begreep ik dat goed?)
 
-    def create_route(self, start, end):
-        # TODO think about how to move the route away from the edge
-        x1, y1 = start
-        x2, y2 = end
+    def add_coordinates(self, start, end):
+        x = start[0]
+        y = start[1]
 
+        # If the cable is left from the goal, the route goes right
+        while x < end[0]:
+            x += 1
+            self.coordinates.append((x, y))
+            if x == end[0]:
+                break
+
+        # If the cable is right from the goal, the route goes left
+        while x > end[0]:
+            x -= 1
+            self.coordinates.append((x, y))
+            if x == end[0]:
+                break
+
+        # If the cable is under from the goal, the route goes up
+        while y < end[1]:
+            y += 1
+            self.coordinates.append((x, y))
+            if y == end[1]:
+                break
+
+        # If the cable is above from goal the route goes down
+        while y > end[1]:
+            y -= 1
+            self.coordinates.append((x, y))
+            if y == end[1]:
+                break
+
+    def create_route(self, start, end, intermediate_point = None):
         self.coordinates.append(start)
 
-        while (x1, y1) != (x2, y2):
-            if x1 < x2:
-                x1 += 1
-            elif x1 > x2:
-                x1 -= 1
-            elif y1 < y2:
-                y1 += 1
-            else:
-                y1 -= 1
+        if intermediate_point:
+            self.add_coordinates(start, intermediate_point)
+            self.add_coordinates(intermediate_point, end)
+        else:
+            self.add_coordinates(start, end)
 
-            self.coordinates.append((x1, y1))
-
+        # Create segment list
         self.create_cable_segments()
 
     # A segment consists out of two adjacent points in the route
     def create_cable_segments(self):
+        #self.segments = []
         for i in range(len(self.coordinates) - 1):
             self.segments.append((self.coordinates[i], self.coordinates[i + 1]))
 
@@ -45,8 +66,8 @@ class Cable():
     def get_route_list_string(self):
         new_list = []
 
-        for segment in self.cable_segments:
+        for segment in self.segments:
             new_list.append(",".join(map(str, segment[0])))
 
-        new_list.append(",".join(map(str, self.cable_segments[-1][-1])))
+        new_list.append(",".join(map(str, self.segments[-1][-1])))
         return new_list

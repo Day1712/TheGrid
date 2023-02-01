@@ -13,6 +13,11 @@ def experiment_sim_ann(district_number, number_of_runs):
             'own cost': [],
             'time': []}
 
+    # Set changes to parameters
+    num_param_changes = 6
+    temperature_options = [250, 750]
+    random_selection_options = [10, 50, 150]
+
     for i in range(number_of_runs):
         # Load the district (1, 2, or 3)
         the_district = district.District(district_number)
@@ -20,25 +25,13 @@ def experiment_sim_ann(district_number, number_of_runs):
         # Create starting state with random solution
         random.create_all_routes(the_district)
 
-        # Parameters
-        if i <= 9:
-            temperature = 100
-            random_selection = 10
-        elif i <= 18:
-            temperature = 100
-            random_selection = 50
-        elif i <= 27:
-            temperature = 100
-            random_selection = 150
-        elif i <= 36:
-            temperature = 1000
-            random_selection = 10
-        elif i <= 45:
-            temperature = 1000
-            random_selection = 50
-        else:
-            temperature = 1000
-            random_selection = 150
+        # Change parameters depending on iteration
+        param_change = i % num_param_changes
+
+        temperature_index = param_change // len(random_selection_options)
+        random_selection_index = param_change % len(random_selection_options)
+        temperature = temperature_options[temperature_index]
+        random_selection = random_selection_options[random_selection_index]
 
         # Keep track of time
         start_time = time.time()

@@ -1,5 +1,6 @@
 import numpy as np
 import random
+import math
 
 
 def manhattan_distance(start, end):
@@ -31,6 +32,16 @@ def middle_point(list_coordinates):
     # New coordinate
     return (x_mid, y_mid)
 
+def update_house(connections_dict, house, battery):
+    '''
+    Updates information accordingly when connection house with other battery
+    '''
+    connections_dict[house] = battery
+    battery.current_capacity -= house.output
+    house.colour = battery.colour
+    house.cables.clear_route()
+    house.cables.create_route(house.coordinate, battery.coordinate)
+
 def change_battery_location(connections_dict):
     '''
     All batteries find the middle point of their assigned houses and moves
@@ -60,6 +71,9 @@ def change_battery_location(connections_dict):
 
 def swapping_connections(connections_dict, random_selection):
     '''
+    Purpose:
+    - Connecting houses to batteries that are more nearby.
+
     Input:
     - Dictionary of all house-battery connections (key: house, value: battery)
     - Random selection (number)
@@ -97,31 +111,17 @@ def swapping_connections(connections_dict, random_selection):
             if (battery_1.current_capacity - house_1.output + house_2.output <= battery_1.max_capacity) and \
                (battery_2.current_capacity - house_2.output + house_1.output <= battery_2.max_capacity):
 
-                # Updating the connections_dict with new connections
-                connections_dict[house_1] = battery_2
-                connections_dict[house_2] = battery_1
-
-                # Update battery capacities
-                battery_1.current_capacity -= house_1.output - house_2.output
-                battery_2.current_capacity -= house_2.output - house_1.output
-
-                # Remove previous cable segments
-                house_1.cables.clear_route()
-                house_2.cables.clear_route()
-
-                # Update colours
-                house_1.colour = battery_2.colour
-                house_2.colour = battery_1.colour
-
-                # Create new cable routes
-                house_1.cables.create_route(house_1.coordinate, battery_2.coordinate)
-                house_2.cables.create_route(house_2.coordinate, battery_1.coordinate)
+                update_house(connections_dict, house_1, battery_2)
+                update_house(connections_dict, house_2, battery_1)
 
                 # Stop the loop
                 return
 
 def new_route(connections_dict):
     '''
+    Purpose:
+    - Adding intermediate route destinations so that cables will overlap more.
+
     Input:
     - dictionary of all house-battery connections (key: house, value: battery)
 
@@ -149,6 +149,4 @@ def new_route(connections_dict):
         # Delete previous route
         house.cables.clear_route()
         # Create route to the nearest point
-        house.cables.create_route(house.coordinate, cable_coordinates[nearest_index])
-        # Add the route from the point to the battery (so it stays connected to the battery)
-        house.cables.create_route(cable_coordinates[nearest_index], battery.coordinate)
+        house.cables.create_route(start = house.coordinate, intermediate_point = cable_coordinates[nearest_index], end = battery.coordinate)

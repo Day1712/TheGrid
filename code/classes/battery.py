@@ -6,7 +6,7 @@ class Battery():
         self.pos_x = int(pos_x)
         self.pos_y = int(pos_y)
         self.coordinate = (self.pos_x, self.pos_y)
-        self.location = f'{self.pos_x}, {self.pos_y}' # Unnecessary, just for json
+        self.location = f'{self.pos_x}, {self.pos_y}'
         self.max_capacity = float(max_capacity)
         self.current_capacity = 0.0
         self.colour = colour

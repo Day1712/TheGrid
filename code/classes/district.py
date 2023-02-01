@@ -123,6 +123,6 @@ class District():
         if type == 'own':
             self.calculate_own_cost()
             return self.own_cost
-        elif type == 'shared':
+        else:
             self.calculate_shared_cost()
             return self.shared_cost
