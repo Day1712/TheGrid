@@ -5,7 +5,7 @@ from code.experiments import experiment_random, experiment_sim_ann, experiment_h
 
 # -------------------------------- Input ----------------------------------
 district_number = 3
-live_plot = "y"
+live_plot = "n"
 # experiment_runs = 18
 
 # --------------------------- Create district -----------------------------
@@ -26,7 +26,7 @@ district = hill_climber.hill_climber_algorithm(district, mutation_function = 'ne
 #district = simulated_annealing.simulated_annealing_algorithm(district, mutation_function = 'new_route', cost_type = 'shared')
 
 
-# ----------------------- District Visualisation ---------------------------
+# ----------------------- Static district Visualisation ---------------------------
 visualisation.basic_static_visualise(district)
 
 

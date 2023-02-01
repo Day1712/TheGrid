@@ -7,8 +7,7 @@ def basic_static_visualise(district):
     # Set up the plot
     fig, ax1 = plt.subplots()
 
-    # Make scatter plot with grid
-
+    # Create lists for plotting the houses and batteries
     house_x = []
     house_y = []
     house_colour = []
@@ -16,7 +15,7 @@ def basic_static_visualise(district):
     battery_y = []
     battery_colour = []
 
-    # Add the location and colour of each input to the lists
+    # Add the location and colour of each house/battery to the lists
     for house in district.connections:
         house_x.append(house.pos_x)
         house_y.append(house.pos_y)
@@ -25,20 +24,19 @@ def basic_static_visualise(district):
         battery_y.append(district.connections[house].pos_y)
         battery_colour.append(district.connections[house].colour)
 
+    # Create district plot
     ax1.grid(which = 'both')
     ax1.scatter(house_x, house_y, c = house_colour, marker = 'o', zorder = 3)
     ax1.scatter(battery_x, battery_y, c = battery_colour, marker = 's', zorder = 3)
-    #ax1.set_xticks(range(min(house_x + battery_x), max(house_x + battery_x) + 1), fontsize = 7)
-    #ax1.set_yticks(range(min(house_y + battery_y), max(house_y + battery_y) + 1), fontsize = 7)
     ax1.set_title(f"Optimalised district {district.district_number}")
     ax1.set_xlabel("x")
     ax1.set_ylabel("y")
-
 
     # Add the plot of the cables
     cables_list = []
     colors_list = []
 
+    # Add cable coordinates and their respectice colours
     for house in district.connections:
         cable_points = []
         for segment in house.cables.segments:
@@ -47,11 +45,9 @@ def basic_static_visualise(district):
         cables_list.append(cable_points)
         colors_list.append(house.colour)
 
+    # Plot the cables in the district
     lc = collections.LineCollection(cables_list, colors=colors_list)
-
     ax1.add_collection(lc)
-    ax1.autoscale()
-    ax1.margins(0.1)
 
     plt.show()
 
@@ -133,74 +129,39 @@ def setup_plot(district):
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(13, 7), gridspec_kw={'width_ratios': [3, 2]})
     return fig, ax1, ax2
 
-
-def static_colour_visualise(district):
-    house_x = []
-    house_y = []
-    house_colour = []
-    battery_x = []
-    battery_y = []
-    battery_colour = []
-
-    # Add the location and colour of each input to the lists
-    for house in district.connections:
-        house_x.append(house.pos_x)
-        house_y.append(house.pos_y)
-        house_colour.append(house.colour)
-        battery_x.append(district.connections[house].pos_x)
-        battery_y.append(district.connections[house].pos_y)
-        battery_colour.append(district.connections[house].colour)
-
-    # Change the figure size
-    plt.figure(figsize=(9,9))
-
-    # Make scatter plot with grid
-    plt.grid(which = 'both')
-    plt.scatter(house_x, house_y, c = house_colour, marker = 'o', zorder = 3)
-    plt.scatter(battery_x, battery_y, c = battery_colour, marker = 's', zorder = 3)
-    plt.xticks(range(min(house_x + battery_x), max(house_x + battery_x) + 1), fontsize = 7)
-    plt.yticks(range(min(house_y + battery_y), max(house_y + battery_y) + 1), fontsize = 7)
-
-    # Add the plot of the cables
-    for house in district.connections:
-        for segment in house.cables.segments:
-            x = [point[0] for point in segment]
-            y = [point[1] for point in segment]
-            plt.plot(x, y, c = house.colour)
-
-    plt.show()
-
 def plot_per_battery(district):
+    # Iterate over battery colours
     for current_colour in district.battery_colours:
+
+        # Create lists for plotting the houses and battery
         house_x = []
         house_y = []
         battery_x = []
         battery_y = []
 
-
         # Change the figure size
-        plt.figure(figsize=(9,9))
+        plt.figure(figsize=(8,8))
 
         # Add the location and colour of each input to the lists
         for house in district.connections:
             if house.colour == current_colour:
                 house_x.append(house.pos_x)
                 house_y.append(house.pos_y)
+
+                # Only connect battery one time
                 if len(battery_x) == 0:
                     battery_x.append(district.connections[house].pos_x)
                     battery_y.append(district.connections[house].pos_y)
+
+                # Plot cable segments
                 for segment in house.cables.segments:
                     x = [point[0] for point in segment]
                     y = [point[1] for point in segment]
                     plt.plot(x, y, c = current_colour)
 
-        # Make scatter plot with grid
+        # Plot the batteries and houses in a grid
         plt.grid(which = 'both')
         plt.scatter(house_x, house_y, c = current_colour, marker = 'o', zorder = 3)
         plt.scatter(battery_x, battery_y, c = current_colour, marker = 's', zorder = 3)
-        plt.xticks(range(min(house_x + battery_x), max(house_x + battery_x) + 1), fontsize = 7)
-        plt.yticks(range(min(house_y + battery_y), max(house_y + battery_y) + 1), fontsize = 7)
-
-
 
         plt.show()
