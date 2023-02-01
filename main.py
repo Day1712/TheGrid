@@ -20,8 +20,14 @@ def main(district_number, algorithm, plot, experiment, runs, output):
                 district = hill_climber.hill_climber_algorithm(district, mutation_function = 'swapping_connections', cost_type = 'own', plot = "n")
                 district = hill_climber.hill_climber_algorithm(district, mutation_function = 'new_route', cost_type = 'shared', plot = "n")
                 visualisation.plot_per_battery(district)
+            else:
+                print(f"Invalid input: {plot}")
             if output == "yes":
                 output.generate_json(district)
+            elif output == "no":
+                pass
+            else:
+                print(f"Invalid input: {output}")
         elif algorithm == "sim_ann":
             if plot == "live":
                 district = simulated_annealing.simulated_annealing_algorithm(district, mutation_function = 'swapping_connections', cost_type = 'own', plot = "y")
@@ -34,24 +40,42 @@ def main(district_number, algorithm, plot, experiment, runs, output):
                 district = simulated_annealing.simulated_annealing_algorithm(district, mutation_function = 'swapping_connections', cost_type = 'own')
                 district = simulated_annealing.simulated_annealing_algorithm(district, mutation_function = 'new_route', cost_type = 'shared', plot = "n")
                 visualisation.plot_per_battery(district)
+            else:
+                print(f"Invalid input: {plot}")
             if output == "yes":
                 output.generate_json(district)
-        if algorithm == "random":
+            elif output == "no":
+                pass
+            else:
+                print(f"Invalid input: {output}")
+        elif algorithm == "random":
             if plot == "live":
                 print("There is no live plot for random algorithm")
             elif plot == "static":
                 visualisation.basic_static_visualise(district)
             elif plot == "battery":
                 visualisation.plot_per_battery(district)
+            else:
+                print(f"Invalid input: {plot}")
             if output == "yes":
                 output.generate_json(district)
-    else:
+            elif output == "no":
+                pass
+            else:
+                print(f"Invalid input: {output}")
+        else:
+            print(f"Invalid input: {algorithm}")
+    elif experiment == "yes":
         if algorithm == "hill":
             experiment_hill_climb.experiment_hill_climb(district_number, runs)
         elif algorithm == "sim_ann":
             experiment_sim_ann.experiment_sim_ann(district_number, runs)
         elif algorithm == "random":
             experiment_random.experiment_random(district_number, runs)
+        else:
+            print(f"Invalid input: {algorithm}")
+    else:
+        print(f"Invalid input: {experiment}")
 
 
 # ----------------------------- Argument Parser ---------------------------------
@@ -66,7 +90,7 @@ if __name__ == "__main__":
     parser.add_argument("-p", "--plot", default = "static", help = "Choose plot type: static, live or battery (for plot per battery)")
     parser.add_argument("-e", "--experiment", default = "no", help = "Choose yes or no for experiment")
     parser.add_argument("-r", "--runs", type=int, default = 18, help = "Choose amount of runs for experiment")
-    parser.add_argument("-o", "--output", default = "n", help = "Choose yes or no for json output")
+    parser.add_argument("-o", "--output", default = "no", help = "Choose yes or no for json output")
 
     # Read arguments from command line
     args = parser.parse_args()
