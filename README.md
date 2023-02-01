@@ -14,11 +14,23 @@ Extra toelichting:
 In ons experiment wordt zowel Hill Climber als Simulated Annealing twee keer achter elkaar gebruikt: de eerste keer zoekt het naar de best mogelijke huis-batterij combinaties en de tweede keer gebruikt het de gevonden oplossing om de routes van de huizen te optimaliseren. Samen resulteert dit tot 1 geoptimaliseerde oplossing.
 
 ## Gebruik
+De gebruiker kan het programme verschillende dingen laten doen door "python main.py" aan te roepen gevolgd door de volgende argumenten:
+("-d", "--district_number", help = "Choose district number")
+("-a", "--algorithm", help = "Choose algorithm: hill, sim_ann, random or none")
+("-p", "--plot", default = "static", help = "Choose plot type: static, live or battery (for plot per battery)")
+("-e", "--experiment", default = "no", help = "Choose yes or no for experiment")
+("-r", "--runs", type=int, default = 18, help = "Choose amount of runs for experiment")
+("-o", "--output", default = "no", help = "Choose yes or no for json output")
+Mocht de gebruiker niet valide opties invoeren (voorbeeld: -e ye ipv -e yes), dan wordt invalid input: {fout} geprint (in het voorbeeld: invalid input: ye)
+
+Als een experiment wordt gedaan wordt de input bij plot en output sowieso genegeerd, het maakt dan dus niet uit wat de gebruiker in voert.
+    
 ### Eén oplossing genereren
-TODO uitleg
+De gebruiker kiest het district d, het algoritme a, soort plot p en output o (yes or no).
 
 ### Experiment starten
-Om het experiment te starten hoeft er op dit moment alleen main.py aangeroepen te worden. (De rest is nu in comments gezet, dit zal nog verbeterd worden).
+Als een experiment wordt gedaan wordt de input bij plot en output sowieso genegeerd, het maakt dan dus niet uit wat de gebruiker in voert.
+De gebruiker voer yes in bij experiment e en kiest district d, algoritme a en aantal runs r. Voor plot en output hoeft niets te worden ingevoerd.
 
 ## Vereisten
 TODO requirement.txt maken
