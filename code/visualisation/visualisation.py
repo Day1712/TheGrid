@@ -4,66 +4,8 @@ import pylab as pl
 from matplotlib import collections
 
 def basic_static_visualise(district):
-    # Lists for the plot
-    list_x = []
-    list_y = []
-    list_colour = []
-
-    # Add the location and colour of each input to the lists
-    for input in district.grid_inputs:
-        list_x.append(input.pos_x)
-        list_y.append(input.pos_y)
-        list_colour.append(input.colour)
-
-    # Change the figure size
-    plt.figure(figsize=(9,9))
-
-    # Make scatter plot with grid
-    plt.grid(which = 'both')
-    plt.title(f'District {district.district_number} (with shared cost of {district.shared_cost})')
-    plt.scatter(list_x, list_y, c = list_colour, zorder = 3)
-    plt.xticks(range(min(list_x), max(list_x) + 1), fontsize = 7)
-    plt.yticks(range(min(list_y), max(list_y) + 1), fontsize = 7)
-
-    # Add the plot of the cables
-    for house in district.connections:
-        for segment in house.cables.segments:
-            x = [point[0] for point in segment]
-            y = [point[1] for point in segment]
-            plt.plot(x, y, c = house.colour)
-
-    plt.show()
-
-def draw_district(district, fig, ax1, ax2, cost_list, iterations):
-
-    # Add the plot of the cables
-    segment_count = 0
-    cables_list = []
-    colors_list = []
-    for house in district.connections:
-        cable_points = []
-        for segment in house.cables.segments:
-            segment_count += 1
-            point1, point2 = segment
-            # if segment_count < 5:
-                # print(segment)
-                # print(point1)
-                # print(point2)
-            cable_points.extend([point1, point2])
-            # x = [point[0] for point in segment]
-            # y = [point[1] for point in segment]
-            # plt.plot(x, y, c = house.colour)
-        cables_list.append(cable_points)
-        colors_list.append(house.colour)
-
-        # if segment_count < 200:
-            # print(cables_list)
-            # print(colors_list)
-    lc = collections.LineCollection(cables_list, colors=colors_list)
-
-    ax1.add_collection(lc)
-    ax1.autoscale()
-    ax1.margins(0.1)
+    # Set up the plot
+    fig, ax1 = plt.subplots()
 
     # Make scatter plot with grid
 
@@ -86,23 +28,109 @@ def draw_district(district, fig, ax1, ax2, cost_list, iterations):
     ax1.grid(which = 'both')
     ax1.scatter(house_x, house_y, c = house_colour, marker = 'o', zorder = 3)
     ax1.scatter(battery_x, battery_y, c = battery_colour, marker = 's', zorder = 3)
-    ax1.set_xticks(range(min(house_x + battery_x), max(house_x + battery_x) + 1), fontsize = 7)
-    ax1.set_yticks(range(min(house_y + battery_y), max(house_y + battery_y) + 1), fontsize = 7)
+    #ax1.set_xticks(range(min(house_x + battery_x), max(house_x + battery_x) + 1), fontsize = 7)
+    #ax1.set_yticks(range(min(house_y + battery_y), max(house_y + battery_y) + 1), fontsize = 7)
+    ax1.set_title(f"Optimalised district {district.district_number}")
+    ax1.set_xlabel("x")
+    ax1.set_ylabel("y")
 
+
+    # Add the plot of the cables
+    cables_list = []
+    colors_list = []
+
+    for house in district.connections:
+        cable_points = []
+        for segment in house.cables.segments:
+            point1, point2 = segment
+            cable_points.extend([point1, point2])
+        cables_list.append(cable_points)
+        colors_list.append(house.colour)
+
+    lc = collections.LineCollection(cables_list, colors=colors_list)
+
+    ax1.add_collection(lc)
+    ax1.autoscale()
+    ax1.margins(0.1)
+
+    plt.show()
+
+def draw_district(district, fig, ax1, ax2, cost_list, iterations):
+
+    # Create cable lists
+    # segment_count = 0
+    cables_list = []
+    colors_list = []
+
+    # Add cable coordinates and their respectice colours
+    for house in district.connections:
+        cable_points = []
+        for segment in house.cables.segments:
+            # segment_count += 1
+            point1, point2 = segment
+            # if segment_count < 5:
+                # print(segment)
+                # print(point1)
+                # print(point2)
+            cable_points.extend([point1, point2])
+            # x = [point[0] for point in segment]
+            # y = [point[1] for point in segment]
+            # plt.plot(x, y, c = house.colour)
+        cables_list.append(cable_points)
+        colors_list.append(house.colour)
+
+        # if segment_count < 200:
+            # print(cables_list)
+            # print(colors_list)
+
+    # Plot the cables in the district
+    lc = collections.LineCollection(cables_list, colors=colors_list)
+    ax1.add_collection(lc)
+    #ax1.autoscale()
+    #ax1.margins(0.1)
+
+    # Create lists for plotting the houses and batteries
+    house_x = []
+    house_y = []
+    house_colour = []
+    battery_x = []
+    battery_y = []
+    battery_colour = []
+
+    # Add the location and colour of each house/battery to the lists
+    for house in district.connections:
+        house_x.append(house.pos_x)
+        house_y.append(house.pos_y)
+        house_colour.append(house.colour)
+        battery_x.append(district.connections[house].pos_x)
+        battery_y.append(district.connections[house].pos_y)
+        battery_colour.append(district.connections[house].colour)
+
+    # Create district plot
+    ax1.grid(which = 'both')
+    ax1.scatter(house_x, house_y, c = house_colour, marker = 'o', zorder = 3)
+    ax1.scatter(battery_x, battery_y, c = battery_colour, marker = 's', zorder = 3)
+    #ax1.set_xticks(range(min(house_x + battery_x), max(house_x + battery_x) + 1), fontsize = 7)
+    #ax1.set_yticks(range(min(house_y + battery_y), max(house_y + battery_y) + 1), fontsize = 7)
+    ax1.set_title(f"District {district.district_number} (with shared cost of {district.shared_cost})")
+    ax1.set_xlabel("x")
+    ax1.set_ylabel("y")
+
+    # Create cost plot
     ax2.plot(iterations, cost_list)
+    ax2.set_title("Cost graph")
+    ax2.set_xlabel("Iterations")
+    ax2.set_ylabel("Total cost")
 
-
-    # ax.title(f'District {district.district_number} (with shared cost of {district.shared_cost})')
+    # Drawing and removing the plot each iteration
     plt.draw()
-
-    # removing the plot each step before the next plot is drawn
-    plt.pause(0.1)
+    plt.pause(0.0001)
     ax1.cla()
     ax2.cla()
 
 
 def setup_plot(district):
-    fig, (ax1, ax2) = plt.subplots(1, 2)
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(13, 7), gridspec_kw={'width_ratios': [3, 2]})
     return fig, ax1, ax2
 
 
