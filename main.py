@@ -8,16 +8,16 @@ district_number = 1
 experiment_runs = 54
 
 # --------------------------- Create district -----------------------------
-#district = district.District(district_number)
+district = district.District(district_number)
 
 
 # ----------------------------- Random Routes ------------------------------
-#random.create_all_routes(district)
+random.create_all_routes(district)
 
 
 # ------------------------------ Hill Climber  ----------------------------
-#district = hill_climber.hill_climber_algorithm(district, mutation_function = 'swapping_connections', cost_type = 'own')
-#district = hill_climber.hill_climber_algorithm(district, mutation_function = 'new_route', cost_type = 'shared')
+district = hill_climber.hill_climber_algorithm(district, mutation_function = 'swapping_connections', cost_type = 'own')
+district = hill_climber.hill_climber_algorithm(district, mutation_function = 'new_route', cost_type = 'shared')
 
 
 # -------------------------- Simulated Annealing --------------------------
@@ -26,7 +26,7 @@ experiment_runs = 54
 
 
 # ----------------------- District Visualisation ---------------------------
-#visualisation.colour_visualise(district)
+visualisation.colour_visualise(district)
 
 
 # ------------------------------ Output ------------------------------------
@@ -34,6 +34,6 @@ experiment_runs = 54
 
 
 # ----------------------------- Experiment ---------------------------------
-experiment_random.experiment_random(district_number, experiment_runs)
-experiment_hill_climb.experiment_hill_climb(district_number, experiment_runs)
-experiment_sim_ann.experiment_sim_ann(district_number, experiment_runs)
+#experiment_random.experiment_random(district_number, experiment_runs)
+#experiment_hill_climb.experiment_hill_climb(district_number, experiment_runs)
+#experiment_sim_ann.experiment_sim_ann(district_number, experiment_runs)

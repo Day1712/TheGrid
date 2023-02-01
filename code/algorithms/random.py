@@ -55,5 +55,5 @@ def create_all_routes(district):
         house.colour = district.connections[house].colour
 
     # Update costs
-    district.calculate_own_cost()
-    district.calculate_shared_cost()
+    district.calculate_cost('own')
+    district.calculate_cost('shared')

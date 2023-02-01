@@ -21,9 +21,7 @@ def experiment_hill_climb(district_number, number_of_runs):
         random.create_all_routes(the_district)
 
         # Parameters
-        if i <= 18:
-            random_selection =  50
-        elif i <= 36:
+        if i <= 27:
             random_selection =  50
         else:
             random_selection = 150

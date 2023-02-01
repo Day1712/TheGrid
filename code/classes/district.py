@@ -71,6 +71,7 @@ class District():
 
         return self.own_cost
 
+
     def calculate_shared_cost(self):
         '''
         Calculate the cost of the cables and batteries. Taking into account
@@ -117,3 +118,11 @@ class District():
         if len(self.connections) != len(self.houses):
             # print('Not all houses are connected')
             self.valid = False
+
+    def calculate_cost(self, type):
+        if type == 'own':
+            self.calculate_own_cost()
+            return self.own_cost
+        elif type == 'shared':
+            self.calculate_shared_cost()
+            return self.shared_cost
