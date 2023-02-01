@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 from code.classes import district
-import pylab as pl
 from matplotlib import collections
 
 def basic_static_visualise(district):
