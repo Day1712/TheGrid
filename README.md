@@ -33,7 +33,7 @@ Als een experiment wordt gedaan wordt de input bij plot en output sowieso genege
 De gebruiker voer yes in bij experiment e en kiest district d, algoritme a en aantal runs r. Voor plot en output hoeft niets te worden ingevoerd.
 
 ## Vereisten
-TODO requirement.txt maken
+Zie requirement.txt
 
 ## Structuur
 TODO Beschrijving van de mappen
