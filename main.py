@@ -4,8 +4,9 @@ from code.algorithms import random, a_star_route, hill_climber, simulated_anneal
 from code.experiments import experiment_random, experiment_sim_ann, experiment_hill_climb
 
 # -------------------------------- Input ----------------------------------
-district_number = 1
-experiment_runs = 54
+district_number = 3
+live_plot = "n"
+# experiment_runs = 18
 
 # --------------------------- Create district -----------------------------
 district = district.District(district_number)
@@ -16,8 +17,8 @@ random.create_all_routes(district)
 
 
 # ------------------------------ Hill Climber  ----------------------------
-district = hill_climber.hill_climber_algorithm(district, mutation_function = 'swapping_connections', cost_type = 'own')
-district = hill_climber.hill_climber_algorithm(district, mutation_function = 'new_route', cost_type = 'shared')
+# district = hill_climber.hill_climber_algorithm(district, mutation_function = 'swapping_connections', cost_type = 'own', plot = live_plot)
+district = hill_climber.hill_climber_algorithm(district, mutation_function = 'new_route', cost_type = 'shared', plot = live_plot)
 
 
 # -------------------------- Simulated Annealing --------------------------
@@ -25,8 +26,8 @@ district = hill_climber.hill_climber_algorithm(district, mutation_function = 'ne
 #district = simulated_annealing.simulated_annealing_algorithm(district, mutation_function = 'new_route', cost_type = 'shared')
 
 
-# ----------------------- District Visualisation ---------------------------
-visualisation.colour_visualise(district)
+# ----------------------- Static district Visualisation ---------------------------
+visualisation.basic_static_visualise(district)
 
 
 # ------------------------------ Output ------------------------------------
@@ -35,5 +36,5 @@ visualisation.colour_visualise(district)
 
 # ----------------------------- Experiment ---------------------------------
 #experiment_random.experiment_random(district_number, experiment_runs)
-#experiment_hill_climb.experiment_hill_climb(district_number, experiment_runs)
+#experiment_hill_climb1.experiment_hill_climb(district_number, experiment_runs)
 #experiment_sim_ann.experiment_sim_ann(district_number, experiment_runs)
