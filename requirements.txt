@@ -1,0 +1,14 @@
+Hardware:
+Modern computer
+
+Software:
+Terminal
+
+Programming language:
+Python 3
+
+Libraries:
+pandas
+numpy
+matplotlib
+argparse
