@@ -3,7 +3,7 @@ Steeds meer huizen produceren hun eigen energie. Als de zon schijnt leveren zonn
 
 Binnen de case SmartGrid zijn er verschillende wijken met elk 150 huizen en 5 batterijen. Elk huis heeft zijn eigen energie output die via kabels bij een batterij opgeslagen kan worden. Maar, deze kabels kosten geld. Ook hebben de batterijen maar bepaalde hoeveelheid aan capaciteit. Dit zorgt voor twee interactieve problemen:
 
-1. Welke huis-batterij combinaties zorgen voor de laagste kosten zonder dat de batterij capaciteit overschreden wordt?
+1. Welke huis-batterij combinaties zorgen voor de laagste kosten zonder de batterij capaciteit te overschrijden?
 2. Hoe zorg je voor zo kort mogelijke kabels met zoveel mogelijk overlap? Want: gedeelde kabels kost minder geld!
 
 Wij hebben verschillende algoritmes gemaakt om deze case op te lossen. Aan de hand van visualisatie is het proces zichtbaar gemaakt. Door middel van experimenten zijn resultaten verzameld om algoritmes met elkaar te vergelijken. Dit zal uiteindelijk tot een conclusie leiden: hoe kan je het goedkoopst een grid van huizen en batterijen optimaliseren. Voor het antwoord zien we jullie graag bij de presentatie!
@@ -28,7 +28,7 @@ Wij hebben een experiment opgericht. In dit experiment worden er meerde keren va
 De resultaten per gevonden oplossing worden opgeslagen als csv bestand (elk algoritme apart). In de resultaten staan:  
 - 'shared cost' (overlappende kabels delen de prijs)
 - 'own cost' (elke individuele kabel telt mee)
-- detijd die het algoritme nodig had om de oplossing te vinden.
+- de tijd die het algoritme nodig had om de oplossing te vinden.
 
 Verder passen we ook verschillende parameters aan gedurende het experiment, bijvoorbeeld de temperatuur bij simulated_annealing. Door deze aanpassingen kunnen we gegronde conclusies trekken over welk algoritme het best gebruikt kan worden bij dit probleem.
 
@@ -37,7 +37,7 @@ De gebruiker kan het programme verschillende dingen laten doen door "python main
 
 1. ("-d", "--district_number", help = "Choose district number")
 2. ("-a", "--algorithm", help = "Choose algorithm: hill, sim_ann, random or none")
-3. ("-m", "--move_batteries", help = "Choose if batteries may move: True or False")
+3. ("-m", "--move_batteries", help = "Choose if batteries may move: yes or no")
 4. ("-p", "--plot", default = "static", help = "Choose plot type: static, live or battery (for plot per battery)")
 5. ("-e", "--experiment", default = "no", help = "Choose yes or no for experiment")
 6. ("-r", "--runs", type=int, default = 18, help = "Choose amount of runs for experiment")
@@ -46,9 +46,8 @@ De gebruiker kan het programme verschillende dingen laten doen door "python main
 Mocht de gebruiker niet valide opties invoeren (voorbeeld: -e ye ipv -e yes), dan wordt invalid input: {fout} geprint (in het voorbeeld: invalid input: ye)
 
 ### Eén oplossing genereren
-De gebruiker kiest het district d, het algoritme a, soort plot p en output o (yes or no).
-
 Voorbeeld:
+De gebruiker kiest het district d, het algoritme a, soort plot p en output o (yes or no).
 ```
 python main.py -d 3 -a hill -p live -o no
 ```
@@ -66,7 +65,7 @@ Zie requirement.txt
 
 ## Structuur
 ```
-algosmartgrid
+TheGrid
 │   README.md
 │   main.py
 │   requirements.txt   

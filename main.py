@@ -10,7 +10,7 @@ def main(district_number, algorithm, move_batteries, plot, experiment, runs, out
         district = district_file.District(district_number)
         random.create_all_routes(district)
 
-        if move_batteries == 'True':
+        if move_batteries == 'yes':
             move_batteries = True
         else:
             move_batteries = False
@@ -94,7 +94,7 @@ if __name__ == "__main__":
     # Adding arguments
     parser.add_argument("-d", "--district_number", default = 1, help = "Choose district number")
     parser.add_argument("-a", "--algorithm", default = 'random', help = "Choose algorithm: hill, sim_ann, random or none")
-    parser.add_argument("-m", "--move_batteries", default = False, help = "Choose if batteries may move: True or False")
+    parser.add_argument("-m", "--move_batteries", default = False, help = "Choose if batteries may move: yes or no")
     parser.add_argument("-p", "--plot", default = "static", help = "Choose plot type: static, live or battery (for plot per battery)")
     parser.add_argument("-e", "--experiment", default = "no", help = "Choose yes or no for experiment")
     parser.add_argument("-r", "--runs", type=int, default = 18, help = "Choose amount of runs for experiment")
