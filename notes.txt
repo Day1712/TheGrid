@@ -1,13 +1,13 @@
 To do's
 
 Aan de opdracht:
-- Beslissen: mogen kabels die naar andere batterijen lopen gedeeld worden qua kosten?
-- Experimenten
+- Code goed mogelijk verbeteren (betere comments, geen dubbele functies, etc.)
 - Resultaten plotten
 
 
 Aan de code/git:
 - Update interface (input opties bij elkaar)
+      - Noa raadde argparse aan ( bijv. -h voor help)
 - Update README
       - De case waar de studenten mee bezig geweest zijn is duidelijk
         geïntroduceerd in de README.
@@ -19,6 +19,4 @@ Aan de code/git:
         algoritmen, of bijvoorbeeld een duidelijke uitleg welke file te runnen
         om welk resultaat te krijgen.
 - Requirements txt
-- Code goed mogelijk verbeteren (betere comments, geen dubbele functies, etc.)
 - Branches opschonen?
--

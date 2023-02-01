@@ -49,8 +49,8 @@ def experiment_hill_climb(district_number, number_of_runs):
         # Start clean next iteration
         the_district.reset_grid()
 
-        print(f'We finished loop {i+1} of hill climber experiment')
+        print(f'Loop {i+1} of hill climber experiment is completed')
 
     # Save results as csv
     df = pd.DataFrame(data)
-    df.to_csv('experiment_hill_climb.csv', header=True)
+    df.to_csv('code/experiments/results/hill_climber/experiment_hill_climb.csv', header=True)
