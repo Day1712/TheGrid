@@ -36,8 +36,8 @@ def experiment_random(district_number, number_of_runs):
         # Start clean next iteration
         the_district.reset_grid()
 
-        print(f'We finished loop {i+1} of random experiment')
+        print(f'Loop {i+1} of random experiment is completed')
 
     # Save results as csv
     df = pd.DataFrame(data)
-    df.to_csv('experiment_random.csv', header=True)
+    df.to_csv('code/experiments/results/random/experiment_random.csv', header=True)

@@ -61,8 +61,8 @@ def experiment_sim_ann(district_number, number_of_runs):
         # Start clean next iteration
         the_district.reset_grid()
 
-        print(f'We finished loop {i+1} of simulated annealing experiment')
+        print(f'Loop {i+1} of simulated annealing experiment is completed')
 
     # Save results as csv
     df = pd.DataFrame(data)
-    df.to_csv('experiment_sim_ann.csv', header=True)
+    df.to_csv('code/experiments/results/simulated_annealing/experiment_sim_ann.csv', header=True)
