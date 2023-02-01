@@ -15,15 +15,15 @@ In ons experiment wordt zowel Hill Climber als Simulated Annealing twee keer ach
 
 ## Gebruik
 De gebruiker kan het programme verschillende dingen laten doen door "python main.py" aan te roepen gevolgd door de volgende argumenten:
-("-d", "--district_number", help = "Choose district number")
-("-a", "--algorithm", help = "Choose algorithm: hill, sim_ann, random or none")
-("-p", "--plot", default = "static", help = "Choose plot type: static, live or battery (for plot per battery)")
-("-e", "--experiment", default = "no", help = "Choose yes or no for experiment")
-("-r", "--runs", type=int, default = 18, help = "Choose amount of runs for experiment")
-("-o", "--output", default = "no", help = "Choose yes or no for json output")
-Mocht de gebruiker niet valide opties invoeren (voorbeeld: -e ye ipv -e yes), dan wordt invalid input: {fout} geprint (in het voorbeeld: invalid input: ye)
 
-Als een experiment wordt gedaan wordt de input bij plot en output sowieso genegeerd, het maakt dan dus niet uit wat de gebruiker in voert.
+1. ("-d", "--district_number", help = "Choose district number")
+2. ("-a", "--algorithm", help = "Choose algorithm: hill, sim_ann, random or none")
+3. ("-p", "--plot", default = "static", help = "Choose plot type: static, live or battery (for plot per battery)")
+4. ("-e", "--experiment", default = "no", help = "Choose yes or no for experiment")
+5. ("-r", "--runs", type=int, default = 18, help = "Choose amount of runs for experiment")
+6. ("-o", "--output", default = "no", help = "Choose yes or no for json output")
+
+Mocht de gebruiker niet valide opties invoeren (voorbeeld: -e ye ipv -e yes), dan wordt invalid input: {fout} geprint (in het voorbeeld: invalid input: ye)
     
 ### Eén oplossing genereren
 De gebruiker kiest het district d, het algoritme a, soort plot p en output o (yes or no).
