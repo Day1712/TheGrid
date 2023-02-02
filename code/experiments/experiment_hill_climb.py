@@ -16,6 +16,7 @@ def experiment_hill_climb(district_number, number_of_runs):
     # Set parameter changes
     midpoint = number_of_runs // 2
     low_random_selection = 50
+    high_random_selection = 150
 
     for i in range(number_of_runs):
         # Load the district (1, 2, or 3)
