@@ -35,8 +35,7 @@ def experiment_hill_climb(district_number, number_of_runs):
         start_time = time.time()
 
         # Run the algorithm
-        the_district = hill_climber.hill_climber_algorithm(the_district, mutation_function = 'swapping_connections', cost_type = 'own', random_selection = random_selection)
-        the_district = hill_climber.hill_climber_algorithm(the_district, mutation_function = 'new_route', cost_type = 'shared', random_selection = random_selection)
+        the_district = hill_climber.hill_climber_algorithm(the_district)
 
         # Stop the clock
         end_time = time.time() - start_time

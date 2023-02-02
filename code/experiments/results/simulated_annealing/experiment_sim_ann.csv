@@ -1,55 +1,55 @@
 ,algorithm,district,parameters,shared cost,own cost,time
-0,random,1,temperature of 100 and random selection of 10,33037,44818,24.022567749023438
-1,random,1,temperature of 100 and random selection of 10,33136,43243,22.704617023468018
-2,random,1,temperature of 100 and random selection of 10,33955,44890,24.42077898979187
-3,random,1,temperature of 100 and random selection of 10,34027,48436,25.700261116027832
-4,random,1,temperature of 100 and random selection of 10,32308,41839,20.997577905654907
-5,random,1,temperature of 100 and random selection of 10,33298,44899,23.113444089889526
-6,random,1,temperature of 100 and random selection of 10,34468,44818,23.61878204345703
-7,random,1,temperature of 100 and random selection of 10,32335,41749,21.536832094192505
-8,random,1,temperature of 100 and random selection of 10,33334,44305,22.99037504196167
-9,random,1,temperature of 100 and random selection of 10,32272,42055,21.424591064453125
-10,random,1,temperature of 100 and random selection of 50,32812,42001,21.222596168518066
-11,random,1,temperature of 100 and random selection of 50,32821,42487,22.351216793060303
-12,random,1,temperature of 100 and random selection of 50,33010,42568,22.12363600730896
-13,random,1,temperature of 100 and random selection of 50,33433,42919,22.93070697784424
-14,random,1,temperature of 100 and random selection of 50,33253,43432,23.119409322738647
-15,random,1,temperature of 100 and random selection of 50,32461,41182,20.98938512802124
-16,random,1,temperature of 100 and random selection of 50,32659,41938,21.973440170288086
-17,random,1,temperature of 100 and random selection of 50,32002,41848,21.876410007476807
-18,random,1,temperature of 100 and random selection of 50,33109,42253,22.133522987365723
-19,random,1,temperature of 100 and random selection of 150,34036,44764,24.620923042297363
-20,random,1,temperature of 100 and random selection of 150,33883,45214,24.65443992614746
-21,random,1,temperature of 100 and random selection of 150,33478,46834,25.275311946868896
-22,random,1,temperature of 100 and random selection of 150,34009,46573,25.10285496711731
-23,random,1,temperature of 100 and random selection of 150,33937,45286,24.739213228225708
-24,random,1,temperature of 100 and random selection of 150,34036,45133,24.318131923675537
-25,random,1,temperature of 100 and random selection of 150,34333,47266,25.68702793121338
-26,random,1,temperature of 100 and random selection of 150,34153,46186,24.787101984024048
-27,random,1,temperature of 100 and random selection of 150,33748,44926,24.250266313552856
-28,random,1,temperature of 1000 and random selection of 10,33028,45691,36.36748385429382
-29,random,1,temperature of 1000 and random selection of 10,32434,41578,32.08523607254028
-30,random,1,temperature of 1000 and random selection of 10,33955,46195,36.05307078361511
-31,random,1,temperature of 1000 and random selection of 10,32803,42262,31.84703016281128
-32,random,1,temperature of 1000 and random selection of 10,32398,41218,32.96876096725464
-33,random,1,temperature of 1000 and random selection of 10,33847,45007,35.017587184906006
-34,random,1,temperature of 1000 and random selection of 10,33127,45259,35.79561805725098
-35,random,1,temperature of 1000 and random selection of 10,32227,40696,30.408483028411865
-36,random,1,temperature of 1000 and random selection of 10,32785,42181,32.54439091682434
-37,random,1,temperature of 1000 and random selection of 50,32767,41803,32.09983420372009
-38,random,1,temperature of 1000 and random selection of 50,32578,41722,31.93102788925171
-39,random,1,temperature of 1000 and random selection of 50,32614,41245,31.15103316307068
-40,random,1,temperature of 1000 and random selection of 50,33676,43396,33.486083030700684
-41,random,1,temperature of 1000 and random selection of 50,32461,41614,31.34233808517456
-42,random,1,temperature of 1000 and random selection of 50,32668,42208,32.18268799781799
-43,random,1,temperature of 1000 and random selection of 50,32263,40768,30.852340936660767
-44,random,1,temperature of 1000 and random selection of 50,32902,43351,34.21746492385864
-45,random,1,temperature of 1000 and random selection of 50,32695,41875,32.31785225868225
-46,random,1,temperature of 1000 and random selection of 150,34162,45052,36.0877251625061
-47,random,1,temperature of 1000 and random selection of 150,34369,45331,36.39477610588074
-48,random,1,temperature of 1000 and random selection of 150,33703,44287,35.079617977142334
-49,random,1,temperature of 1000 and random selection of 150,33874,44269,35.965214014053345
-50,random,1,temperature of 1000 and random selection of 150,33649,43783,35.28182291984558
-51,random,1,temperature of 1000 and random selection of 150,32605,42217,34.124645948410034
-52,random,1,temperature of 1000 and random selection of 150,33568,45196,36.415446043014526
-53,random,1,temperature of 1000 and random selection of 150,33973,46429,38.197782039642334
+0,simulated annealing,1,temperature of 100 and random selection of 10,34261,60496,26.939974784851074
+1,simulated annealing,1,temperature of 100 and random selection of 10,34324,59812,26.914802074432373
+2,simulated annealing,1,temperature of 100 and random selection of 10,34450,58885,26.52736806869507
+3,simulated annealing,1,temperature of 100 and random selection of 10,35089,59380,26.89066219329834
+4,simulated annealing,1,temperature of 100 and random selection of 10,34054,59011,26.810584783554077
+5,simulated annealing,1,temperature of 100 and random selection of 10,34711,60145,27.8281888961792
+6,simulated annealing,1,temperature of 100 and random selection of 50,35098,59965,27.305210828781128
+7,simulated annealing,1,temperature of 100 and random selection of 50,34351,59551,27.55663824081421
+8,simulated annealing,1,temperature of 100 and random selection of 50,33595,60163,27.508992910385132
+9,simulated annealing,1,temperature of 100 and random selection of 50,34558,59938,27.479739904403687
+10,simulated annealing,1,temperature of 100 and random selection of 50,34477,59884,28.171774864196777
+11,simulated annealing,1,temperature of 100 and random selection of 50,34360,60109,27.591343879699707
+12,simulated annealing,1,temperature of 100 and random selection of 150,33577,60262,27.69843316078186
+13,simulated annealing,1,temperature of 100 and random selection of 150,34594,59533,27.067609786987305
+14,simulated annealing,1,temperature of 100 and random selection of 150,33604,59992,27.044312000274658
+15,simulated annealing,1,temperature of 100 and random selection of 150,34909,60505,27.85001516342163
+16,simulated annealing,1,temperature of 100 and random selection of 150,33397,59686,27.0610671043396
+17,simulated annealing,1,temperature of 100 and random selection of 150,34333,59992,27.26647686958313
+18,simulated annealing,1,temperature of 500 and random selection of 10,34207,58984,26.52091908454895
+19,simulated annealing,1,temperature of 500 and random selection of 10,33955,59749,27.99394702911377
+20,simulated annealing,1,temperature of 500 and random selection of 10,34603,59749,27.41517472267151
+21,simulated annealing,1,temperature of 500 and random selection of 10,34333,59506,27.100972890853882
+22,simulated annealing,1,temperature of 500 and random selection of 10,34234,59038,26.67425012588501
+23,simulated annealing,1,temperature of 500 and random selection of 10,34927,59245,27.102072715759277
+24,simulated annealing,1,temperature of 500 and random selection of 50,34837,60298,27.621840000152588
+25,simulated annealing,1,temperature of 500 and random selection of 50,34693,59101,26.964857816696167
+26,simulated annealing,1,temperature of 500 and random selection of 50,34594,59452,27.456467866897583
+27,simulated annealing,1,temperature of 500 and random selection of 50,34441,59983,27.622750997543335
+28,simulated annealing,1,temperature of 500 and random selection of 50,34018,60262,27.804008960723877
+29,simulated annealing,1,temperature of 500 and random selection of 50,34000,59362,26.995743989944458
+30,simulated annealing,1,temperature of 500 and random selection of 150,34243,60505,27.53391408920288
+31,simulated annealing,1,temperature of 500 and random selection of 150,34828,59227,27.0100040435791
+32,simulated annealing,1,temperature of 500 and random selection of 150,34288,60019,27.509377002716064
+33,simulated annealing,1,temperature of 500 and random selection of 150,34639,60802,27.89111304283142
+34,simulated annealing,1,temperature of 500 and random selection of 150,34207,60451,28.03457999229431
+35,simulated annealing,1,temperature of 500 and random selection of 150,33604,59254,26.956522703170776
+36,simulated annealing,1,temperature of 1000 and random selection of 10,34045,60091,27.413596153259277
+37,simulated annealing,1,temperature of 1000 and random selection of 10,34504,60505,27.638760089874268
+38,simulated annealing,1,temperature of 1000 and random selection of 10,34243,59749,27.03161597251892
+39,simulated annealing,1,temperature of 1000 and random selection of 10,34630,59830,27.215423822402954
+40,simulated annealing,1,temperature of 1000 and random selection of 10,34234,59551,27.208786010742188
+41,simulated annealing,1,temperature of 1000 and random selection of 10,35197,60316,27.917896032333374
+42,simulated annealing,1,temperature of 1000 and random selection of 50,34657,59614,27.535624027252197
+43,simulated annealing,1,temperature of 1000 and random selection of 50,35854,61171,28.23110604286194
+44,simulated annealing,1,temperature of 1000 and random selection of 50,34216,60865,28.580693006515503
+45,simulated annealing,1,temperature of 1000 and random selection of 50,34711,61207,28.16376781463623
+46,simulated annealing,1,temperature of 1000 and random selection of 50,33874,60397,27.9013249874115
+47,simulated annealing,1,temperature of 1000 and random selection of 50,34072,59137,26.995058059692383
+48,simulated annealing,1,temperature of 1000 and random selection of 150,33514,59182,26.91844367980957
+49,simulated annealing,1,temperature of 1000 and random selection of 150,34810,60361,27.738226890563965
+50,simulated annealing,1,temperature of 1000 and random selection of 150,34549,60082,27.19767689704895
+51,simulated annealing,1,temperature of 1000 and random selection of 150,34558,59254,27.417266845703125
+52,simulated annealing,1,temperature of 1000 and random selection of 150,34009,58984,27.44217610359192
+53,simulated annealing,1,temperature of 1000 and random selection of 150,34495,59101,27.348647832870483
