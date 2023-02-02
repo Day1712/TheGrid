@@ -27,7 +27,7 @@ def experiment_sim_ann(district_number, number_of_runs):
         # Change the parameters depending on iteration
         temperature_index = i // (number_of_runs // 3)
         random_selection_index = (i % (number_of_runs // 3)) // (number_of_runs // 9)
-        
+
         temperature = temperature_options[min(temperature_index, len(temperature_options) - 1)]
         random_selection = random_selection_options[min(random_selection_index, len(random_selection_options) - 1)]
 
@@ -55,4 +55,4 @@ def experiment_sim_ann(district_number, number_of_runs):
 
     # Save results as csv
     df = pd.DataFrame(data)
-    df.to_csv('code/experiments/results/simulated_annealing/experiment_sim_ann.csv', header=True)
+    df.to_csv(f'code/experiments/results/simulated_annealing/experiment_sim_ann{district_number}.csv', header=True)

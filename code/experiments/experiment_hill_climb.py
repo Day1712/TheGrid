@@ -55,4 +55,4 @@ def experiment_hill_climb(district_number, number_of_runs):
 
     # Save results as csv
     df = pd.DataFrame(data)
-    df.to_csv('code/experiments/results/hill_climber/experiment_hill_climb.csv', header=True)
+    df.to_csv(f'code/experiments/results/hill_climber/experiment_hill_climb{district_number}.csv', header=True)
