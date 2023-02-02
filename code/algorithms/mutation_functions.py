@@ -36,8 +36,9 @@ def update_house(connections_dict, house, battery):
     '''
     Updates information accordingly when connection house with other battery
     '''
+    connections_dict[house].current_capacity -= house.output
     connections_dict[house] = battery
-    battery.current_capacity -= house.output
+    battery.current_capacity += house.output
     house.colour = battery.colour
     house.cables.clear_route()
     house.cables.create_route(house.coordinate, battery.coordinate)

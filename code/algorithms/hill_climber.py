@@ -81,8 +81,6 @@ def hill_climber_algorithm(district, plot = "n", move_batteries = False, converg
                 else:
                     no_improvements = 0
 
-                print(new_cost)
-
                 # PLOT
                 if plot == "y":
                     cost_list.append(new_cost)
