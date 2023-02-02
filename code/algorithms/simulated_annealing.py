@@ -5,7 +5,7 @@ import math
 import copy
 import random
 
-def simulated_annealing_algorithm(district, plot = "n", move_batteries = False, input_temperature = 1000, cooling_rate = 0.99, random_selection = 20):
+def simulated_annealing_algorithm(district, plot = "n", move_batteries = False, input_temperature = 500, cooling_rate = 0.99, random_selection = 20):
     '''
     Input:
     - valid starting district (made by random)

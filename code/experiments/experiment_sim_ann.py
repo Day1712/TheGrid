@@ -35,7 +35,7 @@ def experiment_sim_ann(district_number, number_of_runs):
         start_time = time.time()
 
         # Run the algorithm
-        the_district = simulated_annealing.simulated_annealing_algorithm(the_district)
+        the_district = simulated_annealing.simulated_annealing_algorithm(the_district, input_temperature = temperature, random_selection = random_selection)
 
         # Stop the clock
         end_time = time.time() - start_time
