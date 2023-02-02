@@ -35,9 +35,9 @@ Verder passen we ook verschillende parameters aan gedurende het experiment, bijv
 ## Gebruik
 De gebruiker kan het programme verschillende dingen laten doen door "python main.py" aan te roepen gevolgd door de volgende argumenten:
 
-1. ("-d", "--district_number", help = "Choose district number")
-2. ("-a", "--algorithm", help = "Choose algorithm: hill, sim_ann, random or none")
-3. ("-m", "--move_batteries", help = "Choose if batteries may move: yes or no")
+1. ("-d", "--district_number", default = 3, help = "Choose district number")
+2. ("-a", "--algorithm", default = "random", help = "Choose algorithm: hill, sim_ann, random or none")
+3. ("-m", "--move_batteries", default = "no", help = "Choose if batteries may move: yes or no")
 4. ("-p", "--plot", default = "static", help = "Choose plot type: static, live or battery (for plot per battery)")
 5. ("-e", "--experiment", default = "no", help = "Choose yes or no for experiment")
 6. ("-r", "--runs", type=int, default = 18, help = "Choose amount of runs for experiment")
